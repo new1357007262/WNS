@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter , Route , Switch ,Link } from "react-router-dom";
 import { Layout, Menu, Icon } from 'antd';
+import "../style/start.css"
 
-import success from "./success"
 import Student from "./Student/Student"
 
 class Start extends React.Component{
@@ -11,6 +11,11 @@ class Start extends React.Component{
         this.state={
 
         }
+    }
+    componentDidMount(){
+      console.log("看这")
+      // console.log(this.props.location.state.User)
+      console.log("上面")
     }
     render(){
         const { Header, Content, Footer, Sider } = Layout;
@@ -29,7 +34,7 @@ class Start extends React.Component{
       }}
       >
         <div className="logo" ><img src={require("../static/logo_bg.png")} style={{width:200,height:60,backgroundColor:'#fff'}}/></div>
-        <Menu theme="dark" mode="vertical" defaultSelectedKeys={['1']}>
+        <Menu theme="light" style={{height:'100%'}} mode="vertical" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">
             <Link to="/student">
             <Icon type="contacts" />
@@ -75,11 +80,13 @@ class Start extends React.Component{
         </Menu>
       </Sider>
       <Layout>
-      <Header style={{ background: '#001529',color:"#fff", padding: 0 ,textAlign:'center',fontSize:25}} >迎新数据管理系统</Header>
+      <Header className="start_header" style={{ background:"#11BCB1",color:"#fff", padding: 0 ,textAlign:'center',fontSize:25}} >迎新数据管理系统
+              <span className="start_user">{this.props.location.state.User.realname+" 你好！"}<span onClick={()=>{this.props.history.push("/")}}>退出</span></span>
+        </Header>
         <Content style={{ margin: '24px 16px 0' }}>
           <div style={{ padding: 24, background: '#fff', minHeight:480  }}>
           <Switch>
-            <Route exact path="/start" component={Student}/>
+            <Route path="/start" component={Student}/>
             <Route path="/student" component={Student}/>
            </Switch>
           </div>

@@ -30,7 +30,6 @@ class LoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
             if (!err) {
               console.log('Received values of form: ', values);
-              // let {User} = this.state;
               let url = "http://localhost:8083/teaUser/Login";
               $.get(url,values,({status,message,data})=>{
                 if(status === 200 && data!=null){
@@ -39,7 +38,7 @@ class LoginForm extends React.Component {
                     User:data
                   })
                   console.log(this.state.User)
-                  this.props.history.push("/start")
+                  this.props.history.push({"pathname":"/start",state:{User:data}})
                 }else{
                   alert(message)
                 }
@@ -78,13 +77,6 @@ class LoginForm extends React.Component {
     showModal = () => {
       this.setState({
         visible: true,
-      });
-    };
-  
-    handleOk = e => {
-      console.log(e);
-      this.setState({
-        visible: false,
       });
     };
   

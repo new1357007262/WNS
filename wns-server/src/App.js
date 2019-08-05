@@ -14,13 +14,9 @@ function App() {
       <BrowserRouter>
           <Switch>
               <Route exact path="/" component={Login}></Route>
-              {/* <Route exact path="/" component={Login}></Route> */}
               <Route path="/start" component={Start}></Route>
-              
           </Switch>
       </BrowserRouter>
-      {/* <WrappedHorizontalLoginForm></WrappedHorizontalLoginForm>
-    <login/> */}
     </div>
   );
 }

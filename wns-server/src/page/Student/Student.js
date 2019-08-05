@@ -1,6 +1,7 @@
 import React from "react"
-import { Table, Button,Modal} from 'antd';
+import { Table, Button,Modal,Popconfirm} from 'antd';
 import $ from "jquery"
+import StuForm from "./StuForm"
 
 class Student extends React.Component{
     constructor(props){
@@ -11,6 +12,7 @@ class Student extends React.Component{
             visible:false,
             Students:[],
             selectedRowKeys:[],
+            Student:{}
         }
     }
     componentWillMount(){
@@ -34,81 +36,136 @@ class Student extends React.Component{
 
 
 
-    toAdd=()=>{
-        this.setState({visible:true})
-    }
     handleCancel =()=>{
         this.setState({
             visible:false
         })
     }
+    handleDelete=(id)=>{
+        alert(id)
+    }
+    Alldel=()=>{
+        this.setState({loading:true})
+        alert(this.state.selectedRowKeys)
+        this.setState({loading:false})
+    }
+    submitHandler=()=>{
+        this.state.form.validateFieldsAndScroll((err,values)=>{
+            if(!err){
+                // console.log(values);
+              console.log("====="+JSON.stringify(values));
+              
+            //   let url = "http://localhost:8083/stuBf/saveOrUpdate";
+            //   $.post(url,values,({status,message})=>{
+            //     if(status === 200){
+            //       this.setState({
+            //         visible:false
+            //       })
+            //       this.props.history.push("/start")
+                
+            //     }else{
+            //       alert(message)
+            //       this.setState({visible:false})
+            //     }
+            //   })
+            }
+        })
+    }
 
+    SaveRef=(form)=>{
+        this.setState({form})
+    }
 
     render(){
         const columns = [
             {
               title: '学号',
               dataIndex: 'studentNumber',
-              key:'studentNumber'
+              key:'studentNumber',
+              align:'center'
             },
             {
               title: '姓名',
               dataIndex: 'name',
-              key:'name'
+              key:'name',
+              align:'center'
             },
             {
                 title:'性别',
                 dataIndex:'gender',
-                key:'gender'
+                key:'gender',
+                width:60,
+                align:'center'
             },
             {
                 title:'专业名称',
-                dataIndex:'major.name',
-                key:'major.name'
+                dataIndex:'stuUser.major.name',
+                key:'stuUser.major.name',
+                align:'center'
             },
             {
                 title:'身份证号',
-                dataIndex:'StuUser.cardNumber',
-                key:'StuUser.cardNumber'
+                dataIndex:'stuUser.cardNumber',
+                key:'stuUser.cardNumber',
+                width:150,
+                align:'center'
             },
             {
                 title:'宿舍门牌号',
-                dataIndex:'StuUser.houseNumber',
-                key:'StuUser.houseNumber'
+                dataIndex:'stuUser.houseNumber',
+                key:'stuUser.houseNumber',
+                width:80,
+                align:'center'
             },
             {
                 title:'家庭住址',
                 dataIndex:'address',
-                key:'address'
+                key:'address',
+                width:150,
+                align:'center'
             },
             {
                 title:'电话',
                 dataIndex:'telephone',
-                key:'telephone'
+                key:'telephone',
+                align:'center'
             },
             {
                 title:'操作',
-                render: (record) => <span>
-                <Button type="danger" onClick={this.delHandler.bind(this,record.id)}>删除</Button>
-                <Button type="link" onClick={this.updateHandler.bind(this,record.id)}>更新</Button>
+                render: (record) => <span>{(
+                this.state.Students.length >= 1 ? (
+                    <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.id)}>
+                      <Button type="danger">Delete</Button>
+                    </Popconfirm>
+                  ) : null)},{(this.state.Students.length >= 1 ? (
+                    <Popconfirm title="Sure to update?" onConfirm={() => this.setState({visible:true,Student:record})}>
+                      <Button type="primary">Update</Button>
+                    </Popconfirm>
+                  ) : null)}
+                      
                 </span>,
+                width:50,
+                align:'center'
             }
           ];
         const { dataloading,loading, selectedRowKeys,Students } = this.state;
         const rowSelection = {
             selectedRowKeys,
-            onChange: this.onSelectChange,
+            onChange: selectedRowKeys =>{this.setState({selectedRowKeys})}
         };
         const hasSelected = selectedRowKeys.length > 0;
         return (
             <div>
                 <div style={{ marginBottom: 16 }}>
-                <Button type="primary" onClick={this.toAdd}>添加用户</Button>
-                <Button type="danger" onClick={this.Alldel} disabled={!hasSelected} loading={loading}>
-                    批量删除
-                </Button>
+                <Button type="primary" onClick={()=>{this.setState({visible:true})}} style={{marginRight:10}}>添加用户</Button>
+                <Popconfirm title="Sure to delete?" onConfirm={this.Alldel}>
+                    <Button type="danger"  disabled={!hasSelected} loading={loading}>
+                        批量删除
+                    </Button>
+                </Popconfirm>
+               
                 <span style={{ marginLeft: 8 }}>
-                    {hasSelected ? `选择了 ${selectedRowKeys.length} 个用户` : ''}
+                    {hasSelected ? `选择了 ${selectedRowKeys.length} 条数据` : ''}
                 </span>
                 </div>
                 <Table loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={Students} />
@@ -118,16 +175,8 @@ class Student extends React.Component{
                 onOk={this.submitHandler}
                 onCancel={this.handleCancel}
                 >
-                {/* <form onSubmit={this.submitHandler}>
-                用户名
-                <input type="text" name="name" value={form.name} onChange={this.changeHandler}/><br/>
-                用户名密码
-                <input type="text" name="password" value={form.password} onChange={this.changeHandler}></input><br/>
-                用户电话
-                <input type="text" name="telephone" value={form.telephone} onChange={this.changeHandler}></input><br/>
-                用户头像
-                <input type="text" name="photo" value={form.photo} onChange={this.changeHandler}></input><br/>
-                </form> */}
+                    <StuForm Student={this.state.Student} ref={this.SaveRef}/>
+
                 </Modal>
             </div>
         )
