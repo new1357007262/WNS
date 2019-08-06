@@ -13,16 +13,13 @@ class StuForm extends React.Component{
         }
     }
     componentDidMount(){
-      // if(this.props.Student){
-      //   this.props.form.setFieldsValue(this.props.Student);
-      // }
     }
+    // 自定义校验器 
     checkUser=(rule, value, callback)=>{
         let url = "http://localhost:8083/stuUser/CheckUsername";
         let url2 = "http://localhost:8083/major/FindById";
         setTimeout(() => {
           $.get(url,{username:value},({status,message,data})=>{
-            // console.log(data)
               if(status !== 200 && data == null){
                 callback("用户不存在或服务器错误");
               }else{
@@ -36,8 +33,6 @@ class StuForm extends React.Component{
           })
         }, 1000);
     }
-
-
     render(){
         const { getFieldDecorator,  getFieldError, isFieldTouched } = this.props.form;
         const formItemLayout = {
@@ -58,14 +53,9 @@ class StuForm extends React.Component{
         const telephoneError = isFieldTouched('telephone') && getFieldError('telephone');
         const addressError = isFieldTouched('address') && getFieldError('address');
         const userIdError = isFieldTouched('userId') && getFieldError('userId');
-        
+          // 注册id属性
         getFieldDecorator("id")
-        // getFieldDecorator("id")
-        // getFieldDecorator("id")
-        // getFieldDecorator("id")
-        // getFieldDecorator("id")
-        // getFieldDecorator("id")        
-        // getFieldDecorator("id")    
+ 
         const {defaultData,major} = this.state;
         return (
             <div>
@@ -136,9 +126,7 @@ class StuForm extends React.Component{
                         rules: [{ required: true, message: '电话不能为空!' }],
                       })(
                         <Input
-                          prefix={<Icon type="pay-circle"  style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        //  readOnly
-                          // readOnly   //只读
+                          prefix={<Icon type="phone"  style={{ color: 'rgba(0,0,0,.25)' }} />}
                            placeholder="请输入常用联系电话" 
                         />,
                       )}
@@ -149,10 +137,10 @@ class StuForm extends React.Component{
                         rules: [{ required: true, message: '地址不能为空!' }],
                       })(
                         <Input
-                          prefix={<Icon type="pay-circle"  style={{ color: 'rgba(0,0,0,.25)' }} />}
+                          prefix={<Icon type="home"  style={{ color: 'rgba(0,0,0,.25)' }} />}
                         //  readOnly
                           // readOnly   //只读
-                           placeholder="请输入常用联系电话" 
+                           placeholder="请输入常用家庭住址" 
                         />,
                       )}
                     </Form.Item>
@@ -180,5 +168,4 @@ const mapPropsToFields = (props) =>{
   }
   return obj;
 }
-// const mapPropsToFields  =(props)=>{alert(JSON.stringify(props))}
 export default Form.create({mapPropsToFields})(StuForm);
