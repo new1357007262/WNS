@@ -15,67 +15,118 @@ class Student extends React.Component{
             Student:{}
         }
     }
-    componentWillMount(){
+    componentDidMount(){
         this.loadStudents();
     }
+    //获取数据库中的所有数据
     loadStudents(){
         this.setState({dataloading:true})
         let url = "http://localhost:8083/stuBf/findAllWithExtend";
-        $.get(url,({status,message,data})=>{
+        $.get(url,({status,data})=>{
             if(status === 200 && data != null){
                     this.setState({
                         Students:data,
                         dataloading:false
                     })
             }else{
-                alert(message)
                 this.setState({dataloading:false})
             }
         })
     }
-
-
-
+    // 点击模态框清除，关闭模态框并且清除表单数据
     handleCancel =()=>{
         this.setState({
             visible:false
         })
     }
+    // 删除单个
     handleDelete=(id)=>{
-        alert(id)
+        let url ="http://localhost:8083/stuBf/DelById?id="+id;
+        $.get(url,({status,message})=>{
+            if(status === 200){
+                this.loadStudents();
+            }else{
+                alert(message)
+            }
+        })
     }
+    // 删除多个
     Alldel=()=>{
+        let {selectedRowKeys} = this.state;
         this.setState({loading:true})
-        alert(this.state.selectedRowKeys)
-        this.setState({loading:false})
+        let url ="http://localhost:8083/stuBf/DelById";
+        selectedRowKeys.forEach(item=>{
+            console.log(item)
+             $.get(url,{id:item},({status,message})=>{
+                if(status === 200){
+                    this.loadStudents();
+                }else{
+                    alert(message)
+                }
+            })
+        })   
+        setTimeout(() => {
+            this.setState({
+                selectedRowKeys: [],
+                loading:false
+            });
+        }, 1000);
     }
-    submitHandler=()=>{
+    // form验证提交
+    submitHandler=(e)=>{
+        e.preventDefault();
+        let url = "http://localhost:8083/stuBf/saveOrUpdate";
+        let url1 = "http://localhost:8083/stuBf/findAll";
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
-                // console.log(values);
-              console.log("====="+JSON.stringify(values));
-              
-            //   let url = "http://localhost:8083/stuBf/saveOrUpdate";
-            //   $.post(url,values,({status,message})=>{
-            //     if(status === 200){
-            //       this.setState({
-            //         visible:false
-            //       })
-            //       this.props.history.push("/start")
-                
-            //     }else{
-            //       alert(message)
-            //       this.setState({visible:false})
-            //     }
-            //   })
+                if(values.id === undefined){
+                    $.get(url1,{studentNumber:values.studentNumber},({data})=>{
+                        if(data.length != 0){
+                            this.setState({visible:false})
+                            alert("信息已录入，请重复录入")
+                        }else{
+                            $.post(url,values,({status,message})=>{
+                                if(status === 200){
+                                this.handleCancel();
+                                this.loadStudents();
+                                }else{
+                                alert(message)
+                                this.handleCancel();
+                                }
+                            })
+                        }
+                    })
+                }else{
+                    $.post(url,values,({status,message})=>{
+                        if(status === 200){
+                        this.handleCancel();
+                        this.loadStudents();
+                        }else{
+                        alert(message)
+                        this.handleCancel();
+                        }
+                    })
+                }
             }
         })
     }
 
+    toAdd =()=>{
+        this.setState({
+            visible:true,
+            Student:{}
+        })
+    }
+    toUpdate(record){
+        this.setState({
+            visible:true,
+            Student:record
+        })
+    }
+    // 保存ref到state
     SaveRef=(form)=>{
         this.setState({form})
     }
-
     render(){
         const columns = [
             {
@@ -134,21 +185,23 @@ class Student extends React.Component{
                 title:'操作',
                 render: (record) => <span>{(
                 this.state.Students.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.id)}>
+                    <Popconfirm title="Sure to delete?" onConfirm={this.handleDelete.bind(this,record.id)}>
                       <Button type="danger">Delete</Button>
                     </Popconfirm>
                   ) : null)},{(this.state.Students.length >= 1 ? (
-                    <Popconfirm title="Sure to update?" onConfirm={() => this.setState({visible:true,Student:record})}>
+                    <Popconfirm title="Sure to update?" onConfirm={this.toUpdate.bind(this,record)}>
                       <Button type="primary">Update</Button>
                     </Popconfirm>
                   ) : null)}
                       
                 </span>,
-                width:50,
+                width:60,
                 align:'center'
             }
-          ];
+        ];
+        
         const { dataloading,loading, selectedRowKeys,Students } = this.state;
+        // table选择框，重新赋值到变量中
         const rowSelection = {
             selectedRowKeys,
             onChange: selectedRowKeys =>{this.setState({selectedRowKeys})}
@@ -157,7 +210,7 @@ class Student extends React.Component{
         return (
             <div>
                 <div style={{ marginBottom: 16 }}>
-                <Button type="primary" onClick={()=>{this.setState({visible:true})}} style={{marginRight:10}}>添加用户</Button>
+                <Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加学生</Button>
                 <Popconfirm title="Sure to delete?" onConfirm={this.Alldel}>
                     <Button type="danger"  disabled={!hasSelected} loading={loading}>
                         批量删除
@@ -170,10 +223,11 @@ class Student extends React.Component{
                 </div>
                 <Table loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={Students} />
                 <Modal
-                title="弹框"
+                title="学生信息"
                 visible={this.state.visible}
                 onOk={this.submitHandler}
                 onCancel={this.handleCancel}
+                destroyOnClose
                 >
                     <StuForm Student={this.state.Student} ref={this.SaveRef}/>
 

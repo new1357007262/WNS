@@ -13,51 +13,26 @@ class StuForm extends React.Component{
         }
     }
     componentDidMount(){
-      if(this.props.Student){
-        this.props.form.setFieldsValue(this.props.Student);
-      }
+      // if(this.props.Student){
+      //   this.props.form.setFieldsValue(this.props.Student);
+      // }
     }
-
-
-
-    SelectSubmit = (e) =>{
-        e.preventDefault();
-        this.props.form.validateFields((err,values)=>{
-          if(!err){
-            console.log(values);
-            let url = "";
-            $.get(url,values,({status,message,data})=>{
-              if(status === 200 && data != null){
-                console.log(JSON.stringify(data))
-                this.setState({
-                      User:data,
-                })
-                console.log(this.state.User)
-              }else{
-                alert(message)
-              }
-            })
-          }
-        })
-    }
-
     checkUser=(rule, value, callback)=>{
         let url = "http://localhost:8083/stuUser/CheckUsername";
-        let url1 = "http://localhost:8083/major/FindById";
+        let url2 = "http://localhost:8083/major/FindById";
         setTimeout(() => {
           $.get(url,{username:value},({status,message,data})=>{
-            console.log(data)
+            // console.log(data)
               if(status !== 200 && data == null){
                 callback("用户不存在或服务器错误");
               }else{
-                this.setState({defaultData:data})
-                console.log("Value"+JSON.stringify(this.state.defaultData))
-                
-                $.get(url1,{id:data.majorId},({data})=>{
-                  this.setState({major:data})
-                })
-                  callback();
+                    this.setState({defaultData:data})
+                    $.get(url2,{id:data.majorId},({data})=>{
+                      this.setState({major:data})
+                    })
               }
+              callback();
+                
           })
         }, 1000);
     }
@@ -84,7 +59,7 @@ class StuForm extends React.Component{
         const addressError = isFieldTouched('address') && getFieldError('address');
         const userIdError = isFieldTouched('userId') && getFieldError('userId');
         
-        // getFieldDecorator("id")
+        getFieldDecorator("id")
         // getFieldDecorator("id")
         // getFieldDecorator("id")
         // getFieldDecorator("id")
@@ -109,12 +84,12 @@ class StuForm extends React.Component{
                     </Form.Item>
                     <Form.Item style={{width:458}} label="姓名" validateStatus={nameError ? 'error' : ''} help={nameError || ''}>
                       {getFieldDecorator('name',{
-                         initialValue:defaultData.realname != null ? defaultData.realname : '',     //加默认值
+                         initialValue:defaultData.realname || '',     //加默认值
                         rules: [{ required: true, message: '姓名不能为空!' }],
                       })(
                         <Input
                           prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                          // readOnly   //只读
+                          readOnly   //只读
                            placeholder="请优先输入学号查看姓名" 
                         />,
                       )}
@@ -136,7 +111,7 @@ class StuForm extends React.Component{
                       })(
                         <Input
                           prefix={<Icon type="wallet" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        
+                          readOnly
                           // readOnly   //只读
                            placeholder="请优先输入学号查看专业" 
                         />,
@@ -149,7 +124,7 @@ class StuForm extends React.Component{
                       })(
                         <Input
                           prefix={<Icon type="pay-circle"  style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        
+                          readOnly
                           // readOnly   //只读
                            placeholder="请优先输入学号查看缴纳学费" 
                         />,
@@ -195,14 +170,15 @@ class StuForm extends React.Component{
     }
 
 }
-// const mapPropsToFields=(props)=>{
-//     // alert(JSON.stringify(props))
-//     return {
-//         username: Form.createFormField({
-//             // ...props.username,
-//             value: props.username
-//           }),
-//     }
-// }
+const mapPropsToFields = (props) =>{
+  let obj = {};
+  console.log("sss"+JSON.stringify(props))
+  for(let key in props.Student){
+    obj[key] = Form.createFormField({
+      value: props.Student[key]
+    })
+  }
+  return obj;
+}
 // const mapPropsToFields  =(props)=>{alert(JSON.stringify(props))}
-export default Form.create()(StuForm);
+export default Form.create({mapPropsToFields})(StuForm);

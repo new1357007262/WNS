@@ -80,8 +80,12 @@ class Start extends React.Component{
         </Menu>
       </Sider>
       <Layout>
-      <Header className="start_header" style={{ background:"#11BCB1",color:"#fff", padding: 0 ,textAlign:'center',fontSize:25}} >迎新数据管理系统
-              <span className="start_user">{this.props.location.state.User.realname+" 你好！"}<span onClick={()=>{this.props.history.push("/")}}>退出</span></span>
+      <Header className="start_header" style={{ background:"#11BCB1",color:"#fff", padding: 0 ,textAlign:'center',fontSize:25}} >迎新数据管理系统{ 
+      (
+        this.props.location.state != null ?  
+        (<span className="start_user">{this.props.location.state.User.realname+" 你好！"}<span onClick={()=>{this.props.history.push("/")}}>退出</span></span>)
+        : (<span className="start_user" onClick={()=>{this.props.history.push("/")}}>请登录</span>))}
+              
         </Header>
         <Content style={{ margin: '24px 16px 0' }}>
           <div style={{ padding: 24, background: '#fff', minHeight:480  }}>
