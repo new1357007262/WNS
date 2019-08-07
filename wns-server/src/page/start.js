@@ -86,8 +86,8 @@ class Start extends React.Component{
         : (<span className="start_user" onClick={()=>{this.props.history.push("/")}}>请登录</span>))}
               
         </Header>
-        <Content style={{ margin: '24px 16px 0' }}>
-          <div style={{ padding: 24, background: '#fff', minHeight:480  }}>
+        <Content style={{ margin: '16px 12px 0' }}>
+          <div style={{ padding: 16, background: '#fff', minHeight:450  }}>
           <Switch>
             <Route path="/start" component={Student}/>
             <Route path="/student" component={Student}/>

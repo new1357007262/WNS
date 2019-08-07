@@ -192,7 +192,7 @@ class StuUser extends React.Component{
                     {hasSelected ? `选择了 ${selectedRowKeys.length} 条数据` : ''}
                 </span>
                 </div>
-                <Table loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={StuUsers} />
+                <Table  loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={StuUsers} scroll={{ y: 350 }} />
                 <Modal
                 title="学生用户信息"
                 visible={this.state.visible}

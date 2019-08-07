@@ -41,7 +41,7 @@ class SUserForm extends React.Component{
           }
         }, 1000);
     }
-    saveCardNumber=(value,callback)=>{
+    saveCardNumber=(rule,value,callback)=>{
        setTimeout(() => {
         if(value.length !== 18 ){
           callback("请输入正确的身份证号")
