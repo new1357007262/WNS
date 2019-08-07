@@ -4,6 +4,7 @@ import { Layout, Menu, Icon } from 'antd';
 import "../style/start.css"
 
 import Student from "./Student/Student"
+import StuUser from "./User/StuUser/StuUser"
 
 class Start extends React.Component{
     constructor(props){
@@ -13,9 +14,7 @@ class Start extends React.Component{
         }
     }
     componentDidMount(){
-      console.log("看这")
       // console.log(this.props.location.state.User)
-      console.log("上面")
     }
     render(){
         const { Header, Content, Footer, Sider } = Layout;
@@ -61,12 +60,12 @@ class Start extends React.Component{
               </span>}
           >
             <Menu.Item key="4">
-                <Link to="/stuUser">
+                <Link to="/teaUser">
                 <span>教师用户</span>
                 </Link>
             </Menu.Item>
             <Menu.Item key="5">
-                <Link to="/tesUser">
+                <Link to="/stuUser">
                 <span>学生用户</span>
                 </Link>
             </Menu.Item>
@@ -92,6 +91,7 @@ class Start extends React.Component{
           <Switch>
             <Route path="/start" component={Student}/>
             <Route path="/student" component={Student}/>
+            <Route path="/stuUser" component={StuUser}/>
            </Switch>
           </div>
         </Content>

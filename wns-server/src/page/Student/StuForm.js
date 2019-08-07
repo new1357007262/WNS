@@ -7,7 +7,6 @@ class StuForm extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            User:{},
             defaultData:"",
             major:''
         }
@@ -67,7 +66,7 @@ class StuForm extends React.Component{
                         rules: [{ required: true, message: '学号不能为空!' },{validator:this.checkUser}],
                     })(
                         <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        prefix={<Icon type="contacts" style={{ color: 'rgba(0,0,0,.25)' }} />}
                         placeholder="请输入学号" 
                         />,
                     )}
@@ -78,7 +77,7 @@ class StuForm extends React.Component{
                         rules: [{ required: true, message: '姓名不能为空!' }],
                       })(
                         <Input
-                          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                          prefix={<Icon type="schedule" style={{ color: 'rgba(0,0,0,.25)' }} />}
                           readOnly   //只读
                            placeholder="请优先输入学号查看姓名" 
                         />,
