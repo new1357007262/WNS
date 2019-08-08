@@ -78,30 +78,19 @@
         >
           awesome-vue
         </a>
-      
       </li>
-      <li>
-        <van-button type="default" plain>默认按钮</van-button>
-        <van-button type="primary" plain>主要按钮</van-button>
-        <van-button type="info" plain>信息按钮</van-button>
-        <van-button type="warning" plain>警告按钮</van-button>
-        <van-button type="danger" plain>危险按钮</van-button>
-      </li>
+      <li><van-button type="primary" size="large" >大号按钮</van-button></li>
     </ul>
   </div>
 </template>
 
 <script>
-// import { Button } from 'vant';
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  },
-  components:{
-    
   }
 }
 </script>

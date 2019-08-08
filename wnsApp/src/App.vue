@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <HelloWorld/>
+    <router-link to="/text">b</router-link>
+    <van-button type="primary" size="small" @click="()=>{this.$router.push('/')}">aaaa</van-button>
+    <van-button type="primary" size="small" @click="()=>{this.$router.push('/text')}">bbbb</van-button>
+    <router-link to="/">a</router-link>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  methods:{
+    
   }
 }
 </script>

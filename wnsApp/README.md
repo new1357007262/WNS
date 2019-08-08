@@ -1,4 +1,4 @@
-# wns
+# wnsapp
 
 > A Vue.js project
 
