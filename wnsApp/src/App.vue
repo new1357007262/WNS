@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-link to="/text">b</router-link>
-    <van-button type="primary" size="small" @click="()=>{this.$router.push('/')}">aaaa</van-button>
-    <van-button type="primary" size="small" @click="()=>{this.$router.push('/text')}">bbbb</van-button>
-    <router-link to="/">a</router-link>
     <router-view/>
+    <div class="tar-buttom">
+      <van-button type="primary" @click="()=>{this.$router.push('/')}">aaaa</van-button>
+      <van-button type="primary" @click="()=>{this.$router.push('/text')}">bbbb</van-button>
+    </div>
   </div>
 </template>
 
@@ -18,13 +17,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+  width: 100%;
+}
+.tar-bottom{
+  position: fixed;
+  bottom:0;
+  width: 100%;
+  height: 50px;
+  background-color: lawngreen;
 }
 </style>

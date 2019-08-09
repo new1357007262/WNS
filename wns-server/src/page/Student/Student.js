@@ -233,7 +233,7 @@ class Student extends React.Component{
                     {hasSelected ? `选择了 ${selectedRowKeys.length} 条数据` : ''}
                 </span>
                 </div>
-                <Table loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={Students} scroll={{ y: 350 }} />
+                <Table loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={Students} size="small" />
                 <Modal
                 title="学生信息"
                 visible={this.state.visible}

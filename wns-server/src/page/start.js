@@ -5,6 +5,8 @@ import "../style/start.css"
 
 import Student from "./Student/Student"
 import StuUser from "./User/StuUser/StuUser"
+import TeaUser from './User/TeaUser/TeaUser'
+import Major from './Major/Major'
 
 class Start extends React.Component{
     constructor(props){
@@ -33,7 +35,7 @@ class Start extends React.Component{
       }}
       >
         <div className="logo" ><img src={require("../static/logo_bg.png")} style={{width:200,height:60,backgroundColor:'#fff'}}/></div>
-        <Menu theme="light" style={{height:'100%'}} mode="vertical" defaultSelectedKeys={['1']}>
+        <Menu theme="light" style={{height:'100%'}} mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">
             <Link to="/student">
             <Icon type="contacts" />
@@ -47,7 +49,7 @@ class Start extends React.Component{
             </Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link to="/order">
+            <Link to="/major">
             <Icon type="appstore" />
             <span>专业管理</span>
             </Link>
@@ -92,6 +94,8 @@ class Start extends React.Component{
             <Route path="/start" component={Student}/>
             <Route path="/student" component={Student}/>
             <Route path="/stuUser" component={StuUser}/>
+            <Route path="/teaUser" component={TeaUser}/>
+            <Route path="/major" component={Major}/>
            </Switch>
           </div>
         </Content>

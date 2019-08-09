@@ -1,31 +1,31 @@
 import React from "react"
 import { Table, Button,Modal,Popconfirm} from 'antd';
 import $ from "jquery"
-import SUserForm from "./SUserForm"
+import MajorForm from "./MajorForm"
 
-class StuUser extends React.Component{
+class Major extends React.Component{
     constructor(props){
         super(props)
         this.state={
             loading:false,
             dataloading:false,
             visible:false,
-            StuUsers:[],
+            Majors:[],
             selectedRowKeys:[],
-            StuUser:{}
+            Major:{}
         }
     }
     componentDidMount(){
-        this.loadStuUsers();
+        this.loadMajors();
     }
     //获取数据库中的所有数据
-    loadStuUsers(){
+    loadMajors(){
         this.setState({dataloading:true})
-        let url = "http://localhost:8083/stuUser/findWithMajor";
+        let url = "http://localhost:8083/major/findAllWithExtend";
         $.get(url,({status,data})=>{
             if(status === 200 && data != null){
                     this.setState({
-                        StuUsers:data,
+                        Majors:data,
                         dataloading:false
                     })
             }else{
@@ -41,10 +41,10 @@ class StuUser extends React.Component{
     }
     // 删除单个
     handleDelete=(id)=>{
-        let url ="http://localhost:8083/stuUser/DelById?id="+id;
+        let url ="http://localhost:8083/major/DelById?id="+id;
         $.get(url,({status,message})=>{
             if(status === 200){
-                this.loadStuUsers();
+                this.loadMajors();
             }else{
                 alert(message)
             }
@@ -54,12 +54,12 @@ class StuUser extends React.Component{
     Alldel=()=>{
         let {selectedRowKeys} = this.state;
         this.setState({loading:true})
-        let url ="http://localhost:8083/stuUser/DelById";
+        let url ="http://localhost:8083/major/DelById";
         selectedRowKeys.forEach(item=>{
             console.log(item)
              $.get(url,{id:item},({status,message})=>{
                 if(status === 200){
-                    this.loadStuUsers();
+                    this.loadMajors();
                 }else{
                     alert(message)
                 }
@@ -75,32 +75,56 @@ class StuUser extends React.Component{
     // form验证提交
     submitHandler=(e)=>{
         e.preventDefault();
-        let url = "http://localhost:8083/stuUser/saveOrUpdate";
+        let url = "http://localhost:8083/major/saveOrUpdate";
+        let url1 = "http://localhost:8083/major/findByName";
+        // let url2 = "http://localhost:8083/stuUser/update";
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
-                $.post(url,values,({status,message})=>{
-                    if(status === 200){
-                    this.handleCancel();
-                    this.loadStuUsers();
-                    }else{
-                    alert(message)
-                    this.handleCancel();
-                    }
-                })         
-            }  
+                console.log(values)
+                if(values.id === undefined){
+                    // 保存
+                    $.get(url1,{name:values.name},(data)=>{
+                        if(data.length !=0){
+                            alert("专业已添加，请勿重复添加")
+                            this.handleCancel();
+                        }else{
+                            $.post(url,values,({status,message})=>{
+                                if(status === 200){
+                                    this.handleCancel();
+                                    this.loadMajors();
+                                }else{
+                                    alert(message)
+                                    this.handleCancel();
+                                }
+                            })
+                        }
+                    })
+                }else{
+                    // 修改
+                    $.post(url,values,({status,message})=>{
+                        if(status === 200){
+                        this.handleCancel();
+                        this.loadMajors();
+                        }else{
+                        alert(message)
+                        this.handleCancel();
+                        }
+                    })
+                }
+            }
         })
     }
 
     toAdd =()=>{
         this.setState({
             visible:true,
-            StuUser:{}
+            Major:{}
         })
     }
     toUpdate(record){
         this.setState({
             visible:true,
-            StuUser:record
+            Major:record
         })
     }
     // 保存ref到state
@@ -110,56 +134,42 @@ class StuUser extends React.Component{
     render(){
         const columns = [
             {
-              title: '学号',
-              dataIndex: 'username',
-              key:'usernamae',
-              align:'center'
+              title: '专业名称',
+              dataIndex: 'name',
+              key:'name',
+              align:'center',
+              width:150
             },
             {
-                title:'真实姓名',
-                dataIndex:'realname',
-                key:'realname',
-                align:'center'
-            },
-            {
-                title:'身份证号',
-                dataIndex:'cardNumber',
-                key:'cardNumber',
-                align:'center'
-            },
-            {
-                title:'专业名称',
-                dataIndex:'major.name',
-                key:'major.name',
-                align:'center'
-            },
-            {
-                title:'学院名称',
-                dataIndex:'major.collage.name',
-                key:'major.collage.name',
-                align:'center'
-            },
-            {
-                title:'宿舍门牌号',
-                dataIndex:'houseNumber',
-                key:'houseNumber',
-                align:'center'
-            },
-            {
-                title:'报到状态',
-                dataIndex: 'studentStatus',
-                key:'studentStatus',
+                title:'所属学院',
+                dataIndex:'collage.name',
+                key:'collage.name',
+                width:160,
                 align:'center',
-                render:text=>(text == 0 ? "未报到":"已报到")
+                // width:200
+            },
+            {
+                title:'专业描述',
+                dataIndex:'description',
+                key:'description',
+                align:'center',
+                width:350
+            },
+            {
+                title:'专业学费',
+                dataIndex:'paymentNumber',
+                key:'paymentNumber',
+                align:'center',
+                width:100
             },
             {
                 title:'操作',
                 render: (record) => <span>{(
-                this.state.StuUsers.length >= 1 ? (
+                this.state.Majors.length >= 1 ? (
                     <Popconfirm title="Sure to delete?" onConfirm={this.handleDelete.bind(this,record.id)}>
                       <Button type="danger">Delete</Button>
                     </Popconfirm>
-                  ) : null)},{(this.state.StuUsers.length >= 1 ? (
+                  ) : null)},{(this.state.Majors.length >= 1 ? (
                     <Popconfirm title="Sure to update?" onConfirm={this.toUpdate.bind(this,record)}>
                       <Button type="primary">Update</Button>
                     </Popconfirm>
@@ -171,7 +181,7 @@ class StuUser extends React.Component{
             }
         ];
         
-        const { dataloading,loading, selectedRowKeys,StuUsers } = this.state;
+        const { dataloading,loading, selectedRowKeys,Majors } = this.state;
         // table选择框，重新赋值到变量中
         const rowSelection = {
             selectedRowKeys,
@@ -181,7 +191,7 @@ class StuUser extends React.Component{
         return (
             <div>
                 <div style={{ marginBottom: 16 }}>
-                <Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加学生用户</Button>
+                <Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加专业</Button>
                 <Popconfirm title="Sure to delete?" onConfirm={this.Alldel}>
                     <Button type="danger"  disabled={!hasSelected} loading={loading}>
                         批量删除
@@ -192,15 +202,15 @@ class StuUser extends React.Component{
                     {hasSelected ? `选择了 ${selectedRowKeys.length} 条数据` : ''}
                 </span>
                 </div>
-                <Table  loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={StuUsers} size="small"  />
+                <Table loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={Majors} size="small" />
                 <Modal
-                title="学生用户信息"
+                title="学生信息"
                 visible={this.state.visible}
                 onOk={this.submitHandler}
                 onCancel={this.handleCancel}
                 destroyOnClose
                 >
-                    <SUserForm StuUser={this.state.StuUser} ref={this.SaveRef}/>
+                    <MajorForm Major={this.state.Major} ref={this.SaveRef}/>
 
                 </Modal>
             </div>
@@ -208,4 +218,4 @@ class StuUser extends React.Component{
     }
 }
 
-export default StuUser
+export default Major
