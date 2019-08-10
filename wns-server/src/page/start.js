@@ -7,6 +7,8 @@ import Student from "./Student/Student"
 import StuUser from "./User/StuUser/StuUser"
 import TeaUser from './User/TeaUser/TeaUser'
 import Major from './Major/Major'
+import Course from './Course/Course'
+import Info from './Info/Info'
 
 class Start extends React.Component{
     constructor(props){
@@ -43,7 +45,7 @@ class Start extends React.Component{
             </Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/category">
+            <Link to="/course">
             <Icon type="file-text" />
             <span>课程管理</span>
             </Link>
@@ -73,7 +75,7 @@ class Start extends React.Component{
             </Menu.Item>
           </SubMenu>
           <Menu.Item key="6">
-            <Link to="/user">
+            <Link to="/info">
             <Icon type="notification" />
             <span>消息管理</span>
             </Link>
@@ -96,6 +98,8 @@ class Start extends React.Component{
             <Route path="/stuUser" component={StuUser}/>
             <Route path="/teaUser" component={TeaUser}/>
             <Route path="/major" component={Major}/>
+            <Route path="/course" component={Course}/>
+            <Route path='/info' component={Info}/>
            </Switch>
           </div>
         </Content>

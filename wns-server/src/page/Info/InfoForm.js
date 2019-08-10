@@ -1,23 +1,23 @@
 import React from "react";
-import { Form,Icon,Input, Select} from "antd";
+import { Form,Icon,Input, Select,Upload,Button} from "antd";
 import $ from 'jquery'
 
 
-class MajorForm extends React.Component{
+class InfoForm extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            collages:[]
+            majors:[]
         }
     }
     componentDidMount(){
       this.loadCollage();
     }
     loadCollage=()=>{
-      let url = "http://localhost:8083/collage/FindAll";
+      let url = "http://localhost:8083/major/findAllWithExtend";
       $.get(url,({status,data})=>{
           if(status === 200){
-              this.setState({collages:data})
+              this.setState({majors:data})
           }else{
             alert("error")
           }
@@ -49,26 +49,26 @@ class MajorForm extends React.Component{
               sm: { span:16 },
             },
           };
-        const nameError = isFieldTouched('name') && getFieldError('name');
+        const titleError = isFieldTouched('title') && getFieldError('title');
         const descriptionError = isFieldTouched('description') && getFieldError('description');
         const paymentNumberError = isFieldTouched('paymentNumber') && getFieldError('paymentNumber');
-        const collageIdError = isFieldTouched('collageId') && getFieldError('collageId');
+        const majorIdError = isFieldTouched('majorId') && getFieldError('majorId');
           // 注册id属性
         getFieldDecorator("id")
  
-        const {collages} = this.state;
+        const {majors} = this.state;
         return (
             <div>
                  <Form {...formItemLayout} layout="inline" hideRequiredMark>
-                    <Form.Item style={{width:458}} label="专业名称" validateStatus={nameError ? 'error' : ''} help={nameError || ''}>
-                      {getFieldDecorator('name',{
+                    <Form.Item style={{width:458}} label="课程名称" validateStatus={titleError ? 'error' : ''} help={titleError || ''}>
+                      {getFieldDecorator('title',{
                         //  initialValue:defaultData.realname || '',     //加默认值
-                        rules: [{ required: true, message: '专业名不能为空!' }],
+                        rules: [{ required: true, message: '课程名不能为空!' }],
                       })(
                         <Input
                           prefix={<Icon type="schedule" style={{ color: 'rgba(0,0,0,.25)' }} />}
                           // readOnly   //只读
-                           placeholder="请输入专业名称" 
+                           placeholder="请输入课程名称" 
                         />,
                       )}
                     </Form.Item>
@@ -83,31 +83,27 @@ class MajorForm extends React.Component{
                         />,
                       )}
                     </Form.Item>
-                      <Form.Item style={{width:458}} label="缴费金额" validateStatus={paymentNumberError ? 'error' : ''} help={paymentNumberError || ''}>
-                        {getFieldDecorator('paymentNumber',{
-                          // initialValue:major.paymentNumber,     //加默认值
-                          rules: [{ required: true, message: '金额不能为空!' }],
-                        })(
-                          <Input
-                          prefix={<Icon type="pay-circle"  style={{ color: 'rgba(0,0,0,.25)' }} />}
-                          // readOnly
-                          // readOnly   //只读
-                          placeholder="请优先输入学号查看缴纳学费" 
-                          />,
-                          )}
-                      </Form.Item>
-                    <Form.Item style={{width:458}} label="所属学院" validateStatus={collageIdError ? 'error' : ''} help={collageIdError || ''}>
-                      {getFieldDecorator('collageId',{
-                        // initialValue:1,     //加默认值
-                        rules: [{ required: true, message: '专业不能为空!' }],
+                    <Form.Item style={{width:458}} label="上传主题图片" validateStatus={paymentNumberError ? 'error' : ''} help={paymentNumberError || ''}>
+                      {getFieldDecorator('paymentNumber',{
+                        // initialValue:major.paymentNumber,     //加默认值
                       })(
-                          <Select placeholder="请选择所属学院">
-                            {
-                              collages.map(item =>{
-                                return (<Select.Option value={item.id}>{item.name}</Select.Option>) 
-                              })
-                            }
-                          </Select>
+                        <Upload name="logo" action="/upload.do" listType="picture">
+                          <Button>
+                            <Icon type="upload" /> Click to upload
+                          </Button>
+                        </Upload>,
+                        )}
+                    </Form.Item>
+                    <Form.Item style={{width:458}} label="消息路径地址" validateStatus={majorIdError ? 'error' : ''} help={majorIdError || ''}>
+                      {getFieldDecorator('majorId',{
+                        // initialValue:1,     //加默认值
+                        rules: [{ required: true, message: '路径不能为空!' }],
+                      })(
+                        <Input
+                        prefix={<Icon type="wallet" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        // readOnly   //只读
+                         placeholder="请输入专业描述信息" type="url"
+                        />
                         )}
                     </Form.Item>
                 </Form>
@@ -120,11 +116,11 @@ class MajorForm extends React.Component{
 const mapPropsToFields = (props) =>{
   let obj = {};
 //   console.log("sss"+JSON.stringify(props))
-  for(let key in props.Major){
+  for(let key in props.Info){
     obj[key] = Form.createFormField({
-      value: props.Major[key]
+      value: props.Info[key]
     })
   }
   return obj;
 }
-export default Form.create({mapPropsToFields})(MajorForm);
+export default Form.create({mapPropsToFields})(InfoForm);
