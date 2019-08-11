@@ -1,5 +1,5 @@
 import React from "react";
-import { Form,Icon,Input, Select,Upload,Button} from "antd";
+import { Form,Icon,Input,Upload,Button,AutoComplete} from "antd";
 import $ from 'jquery'
 
 
@@ -7,7 +7,8 @@ class InfoForm extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            majors:[]
+            majors:[],
+            autoCompleteResult:[]
         }
     }
     componentDidMount(){
@@ -37,7 +38,17 @@ class InfoForm extends React.Component{
           })
         }, 1000);
     }
+    handleWebsiteChange = value => {
+      let autoCompleteResult;
+      if (!value) {
+        autoCompleteResult = [];
+      } else {
+        autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
+      }
+      this.setState({ autoCompleteResult });
+    };
     render(){
+      const {autoCompleteResult} = this.state;
         const { getFieldDecorator,  getFieldError, isFieldTouched } = this.props.form;
         const formItemLayout = {
             labelCol: {
@@ -49,14 +60,17 @@ class InfoForm extends React.Component{
               sm: { span:16 },
             },
           };
+          const websiteOptions = autoCompleteResult.map(website => (
+            <AutoComplete.Option key={website}>{website}</AutoComplete.Option>
+          ));
         const titleError = isFieldTouched('title') && getFieldError('title');
         const descriptionError = isFieldTouched('description') && getFieldError('description');
-        const paymentNumberError = isFieldTouched('paymentNumber') && getFieldError('paymentNumber');
-        const majorIdError = isFieldTouched('majorId') && getFieldError('majorId');
+        const photoError = isFieldTouched('photo') && getFieldError('photo');
+        const urlError = isFieldTouched('url') && getFieldError('url');
           // 注册id属性
         getFieldDecorator("id")
  
-        const {majors} = this.state;
+        
         return (
             <div>
                  <Form {...formItemLayout} layout="inline" hideRequiredMark>
@@ -83,8 +97,8 @@ class InfoForm extends React.Component{
                         />,
                       )}
                     </Form.Item>
-                    <Form.Item style={{width:458}} label="上传主题图片" validateStatus={paymentNumberError ? 'error' : ''} help={paymentNumberError || ''}>
-                      {getFieldDecorator('paymentNumber',{
+                    <Form.Item style={{width:458}} label="上传主题图片" validateStatus={photoError ? 'error' : ''} help={photoError || ''}>
+                      {getFieldDecorator('photo',{
                         // initialValue:major.paymentNumber,     //加默认值
                       })(
                         <Upload name="logo" action="/upload.do" listType="picture">
@@ -94,16 +108,19 @@ class InfoForm extends React.Component{
                         </Upload>,
                         )}
                     </Form.Item>
-                    <Form.Item style={{width:458}} label="消息路径地址" validateStatus={majorIdError ? 'error' : ''} help={majorIdError || ''}>
-                      {getFieldDecorator('majorId',{
+                    <Form.Item style={{width:458}} label="消息路径地址" validateStatus={urlError ? 'error' : ''} help={urlError || ''}>
+                      {getFieldDecorator('url',{
                         // initialValue:1,     //加默认值
                         rules: [{ required: true, message: '路径不能为空!' }],
                       })(
-                        <Input
-                        prefix={<Icon type="wallet" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        <AutoComplete
+                          dataSource={websiteOptions}
+                          onChange={this.handleWebsiteChange}
+                        >
+                          <Input prefix={<Icon type="wallet" style={{ color: 'rgba(0,0,0,.25)' }} />}
                         // readOnly   //只读
-                         placeholder="请输入专业描述信息" type="url"
-                        />
+                         placeholder="请输入专业描述信息" />
+                        </AutoComplete>,
                         )}
                     </Form.Item>
                 </Form>
