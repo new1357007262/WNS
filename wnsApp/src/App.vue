@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <router-view/>
+    <div><router-view/></div>
     <div class="tar-buttom">
-      <van-button type="primary" @click="()=>{this.$router.push('/')}">aaaa</van-button>
-      <van-button type="primary" @click="()=>{this.$router.push('/text')}">bbbb</van-button>
+      <div style="padding:10px; cursor:pointer;flex:1" @click="()=>{this.$router.push('/')}"><img src="@/assets/first.png" alt=""/><div>主页</div></div>
+      <div style="padding:10px; cursor:pointer;flex:1" @click="()=>{this.$router.push('/text')}"><img src="@/assets/user.png" alt=""/><div>个人中心</div></div>
+      <div style="padding:10px; cursor:pointer;flex:1" @click="()=>{this.$router.push('/text')}"><img src="@/assets/user.png" alt=""/><div>个人中心</div></div>
+      <div style="padding:10px; cursor:pointer;flex:1" @click="()=>{this.$router.push('/text')}"><img src="@/assets/user.png" alt=""/><div>个人中心</div></div>
     </div>
   </div>
 </template>
@@ -18,17 +20,25 @@ export default {
 </script>
 
 <style scoped>
-
-#app {
-  text-align: center;
+html,body{
   height: 100%;
   width: 100%;
 }
-.tar-bottom{
-  position: fixed;
-  bottom:0;
+#app {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   width: 100%;
-  height: 50px;
-  background-color: lawngreen;
+}
+#app>div:first-child{
+  flex: 10.5;
+}
+.tar-buttom{
+  display: flex;
+  flex:1.5;
+  height: 70px;
+  background:linear-gradient(to top right,#34BAEA,mediumspringgreen) ;
+
 }
 </style>

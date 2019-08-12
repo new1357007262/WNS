@@ -4,6 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import { Button } from 'vant';
+import { Swipe, SwipeItem } from 'vant';
+import { NoticeBar } from 'vant';
+
+Vue.use(NoticeBar);
+
+Vue.use(Swipe).use(SwipeItem)
 
 Vue.use(Button);
 
