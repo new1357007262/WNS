@@ -29,15 +29,15 @@
           <div>找不见点这</div>
         </div>
         <div class="content-list1">
-          <div>须</div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div><span>新</span></div>
+          <div><span>生</span></div>
+          <div><span>须</span></div>
+          <div><span>知</span></div>
         </div>
         <div class="content-list2">
-          <div></div>
-          <div></div>
-          <div></div>
+          <div><span>奖</span></div>
+          <div><span>贷</span></div>
+          <div><span>助</span></div>
           <div></div>
         </div>
       </div>
@@ -95,14 +95,17 @@ export default {
   display:flex;
 }
 .content-list1>div,.content-list2>div{
-  width: 25%;
-  border-radius: 50%;
-  height: 80%;
-  background-color: #19d8e6;
-  margin: 3px;
+  flex:4;
+  background-color: #fff;
   color:#fff;
   font-size: 30px;
-  text-align: center;
+}
+.content-list1>div>span,.content-list2>div>span{
+  display: inline-block;
+  margin: 25% auto;
+  border-radius: 50%;
+  background-color:#19d8e6;
+  padding :10px;
 }
 
 </style>
