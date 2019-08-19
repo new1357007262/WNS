@@ -36,8 +36,8 @@
 </template>
 <script>
 export default {
-  name: "Index"
-};
+  name: 'Index'
+}
 </script>
 <style lang="scss" scoped>
 .home {
