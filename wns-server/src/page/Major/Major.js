@@ -21,7 +21,8 @@ class Major extends React.Component{
     //获取数据库中的所有数据
     loadMajors(){
         this.setState({dataloading:true})
-        let url = "http://localhost:8083/major/findAllWithExtend";
+        // let url = "http://localhost:8083/major/findAllWithExtend";
+        let url = "http://203.195.219.213:8083/major/findAllWithExtend";
         $.get(url,({status,data})=>{
             if(status === 200 && data != null){
                     this.setState({
@@ -41,7 +42,8 @@ class Major extends React.Component{
     }
     // 删除单个
     handleDelete=(id)=>{
-        let url ="http://localhost:8083/major/DelById?id="+id;
+        // let url ="http://localhost:8083/major/DelById?id="+id;
+        let url ="http://203.195.219.213:8083/major/DelById?id="+id;
         $.get(url,({status,message})=>{
             if(status === 200){
                 this.loadMajors();
@@ -54,7 +56,8 @@ class Major extends React.Component{
     Alldel=()=>{
         let {selectedRowKeys} = this.state;
         this.setState({loading:true})
-        let url ="http://localhost:8083/major/DelById";
+        // let url ="http://localhost:8083/major/DelById";
+        let url ="http://203.195.219.213:8083/major/DelById";
         selectedRowKeys.forEach(item=>{
             console.log(item)
              $.get(url,{id:item},({status,message})=>{
@@ -75,9 +78,10 @@ class Major extends React.Component{
     // form验证提交
     submitHandler=(e)=>{
         e.preventDefault();
-        let url = "http://localhost:8083/major/saveOrUpdate";
-        let url1 = "http://localhost:8083/major/findByName";
-        // let url2 = "http://localhost:8083/stuUser/update";
+        // let url = "http://localhost:8083/major/saveOrUpdate";
+        // let url1 = "http://localhost:8083/major/findByName";
+        let url = "http://203.195.219.213:8083/major/saveOrUpdate";
+        let url1 = "http://203.195.219.213:8083/major/findByName";
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
                 console.log(values)

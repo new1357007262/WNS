@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -33,6 +33,11 @@ export default new Router({
       component: () => import('./views/Course.vue')
     },
     {
+      path: '/infotwo',
+      name: 'infotwo',
+      component: () => import('./views/InfoTwo.vue')
+    },
+    {
       path: '/setting',
       name: 'setting',
       component: () => import('./views/Setting.vue')
@@ -49,17 +54,26 @@ export default new Router({
         {
           path: 'hme',
           name: 'hme',
-          component: () => import('./views/Hme.vue')
+          component: () => import('./views/Hme.vue'),
+          meta: {
+            isActive: 1
+          }
         },
         {
           path: 'scholl',
           name: 'scholl',
-          component: () => import('./views/Scholl.vue')
+          component: () => import('./views/Scholl.vue'),
+          meta: {
+            isActive: 2
+          }
         },
         {
           path: 'profile',
           name: 'profile',
-          component: () => import('./views/Profile.vue')
+          component: () => import('./views/Profile.vue'),
+          meta: {
+            isActive: 3
+          }
         }
       ]
     },

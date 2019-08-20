@@ -2,7 +2,7 @@
   <div class="course">
     <header>
       我的课程
-      <span class="goBack" @click="$router.go(-1)"><</span>
+    <img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt />
     </header>
     <section class="course">
       <section class="item">
@@ -44,8 +44,9 @@ export default {
     .goBack {
       position: absolute;
       top: 0.05rem;
-      left: 0.13rem;
-      font-size: 40px;
+      left: 0px;
+      width: 0.5rem;
+      height: 0.5rem;
     }
   }
   .course {

@@ -21,7 +21,8 @@ class StuUser extends React.Component{
     //获取数据库中的所有数据
     loadStuUsers(){
         this.setState({dataloading:true})
-        let url = "http://localhost:8083/stuUser/findWithMajor";
+        // let url = "http://localhost:8083/stuUser/findWithMajor";
+        let url = "http://203.195.219.213:8083/stuUser/findWithMajor";
         $.get(url,({status,data})=>{
             if(status === 200 && data != null){
                     this.setState({
@@ -41,7 +42,8 @@ class StuUser extends React.Component{
     }
     // 删除单个
     handleDelete=(id)=>{
-        let url ="http://localhost:8083/stuUser/DelById?id="+id;
+        // let url ="http://localhost:8083/stuUser/DelById?id="+id;
+        let url ="http://203.195.219.213:8083/stuUser/DelById?id="+id;
         $.get(url,({status,message})=>{
             if(status === 200){
                 this.loadStuUsers();
@@ -54,7 +56,8 @@ class StuUser extends React.Component{
     Alldel=()=>{
         let {selectedRowKeys} = this.state;
         this.setState({loading:true})
-        let url ="http://localhost:8083/stuUser/DelById";
+        // let url ="http://localhost:8083/stuUser/DelById";
+        let url ="http://203.195.219.213:8083/stuUser/DelById";
         selectedRowKeys.forEach(item=>{
             console.log(item)
              $.get(url,{id:item},({status,message})=>{
@@ -75,7 +78,8 @@ class StuUser extends React.Component{
     // form验证提交
     submitHandler=(e)=>{
         e.preventDefault();
-        let url = "http://localhost:8083/stuUser/saveOrUpdate";
+        // let url = "http://localhost:8083/stuUser/saveOrUpdate";
+        let url = "http://203.195.219.213:8083/stuUser/saveOrUpdate";
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
                 $.post(url,values,({status,message})=>{

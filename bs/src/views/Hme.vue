@@ -1,6 +1,5 @@
 <template>
   <div class="hme">
-    <header>迎新首页</header>
     <Swipe :show-indicators="true" class="swiper-box">
       <SwipeItem class="swiper-item">
         <img
@@ -16,27 +15,27 @@
       </SwipeItem>
     </Swipe>
     <nav class="nav-top">
-      <router-link to="/info" tag="section" class="item" >
+      <router-link to="/infotwo" tag="section" class="item" >
         <section class="img-box">
-          <img src="../assets/images/info.png" alt />
+          <img src="../../public/images/info.png" alt />
         </section>
         <p>完善信息</p>
       </router-link>
       <router-link to="/price" tag="section" class="item">
         <section class="img-box">
-          <img src="../assets/images/price.png" alt />
+          <img src="../../public/images/price.png" alt />
         </section>
         <p>贷款通知</p>
       </router-link>
       <router-link to="/course" tag="section" class="item">
         <section class="img-box">
-          <img src="../assets/images/course.png" alt />
+          <img src="../../public/images/course.png" alt />
         </section>
         <p>我的课程</p>
       </router-link>
       <router-link to="/more" tag="section" class="item">
         <section class="img-box">
-          <img src="../assets/images/more.png" alt />
+          <img src="../../public/images/more.png" alt />
         </section>
         <p>更多</p>
       </router-link>
@@ -48,13 +47,13 @@
         <section class="title">
           <span>入学须知</span>
           <span>查看</span>
-          <img src="../assets/images/new-card.png" alt />
+          <img src="../../public/images/new-card.png" alt />
         </section>
         <section
           class="content"
         >2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知</section>
         <section class="time">
-          <img src="../assets/images/time.png" alt />
+          <img src="../../public/images/time.png" alt />
           <span>2019-9-9 09:09:09</span>
         </section>
       </section>
@@ -62,13 +61,13 @@
         <section class="title">
           <span>入学须知</span>
           <span>查看</span>
-          <img src="../assets/images/new-card.png" alt />
+          <img src="../../public/images/new-card.png" alt />
         </section>
         <section
           class="content"
         >2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知</section>
         <section class="time">
-          <img src="../assets/images/time.png" alt />
+          <img src="../../public/images/time.png" alt />
           <span>2019-9-9 09:09:09</span>
         </section>
       </section>
@@ -76,13 +75,13 @@
         <section class="title">
           <span>入学须知</span>
           <span>查看</span>
-          <img src="../assets/images/new-card.png" alt />
+          <img src="../../public/images/new-card.png" alt />
         </section>
         <section
           class="content"
         >2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知</section>
         <section class="time">
-          <img src="../assets/images/time.png" alt />
+          <img src="../../public/images/time.png" alt />
           <span>2019-9-9 09:09:09</span>
         </section>
       </section>
@@ -90,13 +89,13 @@
         <section class="title">
           <span>入学须知</span>
           <span>查看</span>
-          <img src="../assets/images/new-card.png" alt />
+          <img src="../../public/images/new-card.png" alt />
         </section>
         <section
           class="content"
         >2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知</section>
         <section class="time">
-          <img src="../assets/images/time.png" alt />
+          <img src="../../public/images/time.png" alt />
           <span>2019-9-9 09:09:09</span>
         </section>
       </section>
@@ -215,7 +214,7 @@ export default {
     padding-bottom: .2rem;
     left: 0;
     right: 0;
-    top: 3.3rem;
+    top: 2.7rem;
     bottom: .7rem;
     overflow: auto;
     .item {

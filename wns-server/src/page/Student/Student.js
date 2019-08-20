@@ -21,7 +21,8 @@ class Student extends React.Component{
     //获取数据库中的所有数据
     loadStudents(){
         this.setState({dataloading:true})
-        let url = "http://localhost:8083/stuBf/findAllWithExtend";
+        // let url = "http://localhost:8083/stuBf/findAllWithExtend";
+        let url = "http://203.195.219.213:8083/stuBf/findAllWithExtend";
         $.get(url,({status,data})=>{
             if(status === 200 && data != null){
                     this.setState({
@@ -41,7 +42,8 @@ class Student extends React.Component{
     }
     // 删除单个
     handleDelete=(id)=>{
-        let url ="http://localhost:8083/stuBf/DelById?id="+id;
+        // let url ="http://localhost:8083/stuBf/DelById?id="+id;
+        let url ="http://203.195.219.213:8083/stuBf/DelById?id="+id;
         $.get(url,({status,message})=>{
             if(status === 200){
                 this.loadStudents();
@@ -54,7 +56,8 @@ class Student extends React.Component{
     Alldel=()=>{
         let {selectedRowKeys} = this.state;
         this.setState({loading:true})
-        let url ="http://localhost:8083/stuBf/DelById";
+        // let url ="http://localhost:8083/stuBf/DelById";
+        let url ="http://203.195.219.213:8083/stuBf/DelById";
         selectedRowKeys.forEach(item=>{
             console.log(item)
              $.get(url,{id:item},({status,message})=>{
@@ -75,9 +78,12 @@ class Student extends React.Component{
     // form验证提交
     submitHandler=(e)=>{
         e.preventDefault();
-        let url = "http://localhost:8083/stuBf/saveOrUpdate";
-        let url1 = "http://localhost:8083/stuBf/findAll";
-        let url2 = "http://localhost:8083/stuUser/update";
+        // let url = "http://localhost:8083/stuBf/saveOrUpdate";
+        // let url1 = "http://localhost:8083/stuBf/findAll";
+        // let url2 = "http://localhost:8083/stuUser/update";
+        let url = "http://203.195.219.213:8083/stuBf/saveOrUpdate";
+        let url1 = "http://203.195.219.213:8083/stuBf/findAll";
+        let url2 = "http://203.195.219.213:8083/stuUser/updatestatus";
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
                 if(values.id === undefined){

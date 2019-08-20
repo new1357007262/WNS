@@ -1,6 +1,6 @@
 <template>
   <div class="info">
-     <header>完善信息 <span class="goBack" @click="$router.go(-1)"> < </span></header>
+     <header>个人信息  <img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt=""></header>
      <section class="info-box">
        <section class="info-item">
          <span>姓名</span>
@@ -25,8 +25,11 @@
      </section>
       <router-link to="/setting" class="my-setting" tag="section">
          个人设置
-         <img src="../assets/images/xiayibu.png" alt="">
+         <img src="../../public/images/xiayibu.png" alt="">
        </router-link >
+       <router-link to="/index" tag="section" class="logout">
+        <button>退出</button>
+       </router-link>
   </div>
 </template>
 <script>
@@ -36,6 +39,8 @@ export default {
 </script>
 <style lang="scss" scoped>
   .info{
+    height: 100vh;
+    background: #E4F4EA;
     header {
     background: #1296db;
     padding: 0.2rem;
@@ -44,21 +49,22 @@ export default {
     font-weight: 800;
     position: relative;
     .goBack{
-      position: absolute;
-      top:.05rem;
-      left:.13rem;
-      font-size: 40px;
+    position: absolute;
+      top: .05rem;
+      left: 0px;
+      width: .5rem;
+      height: .5rem;
     }
   }
   .info-box{
     font-size: 14px;
     .info-item{
     padding: .17rem;
+    background: #fff;
       display: flex;
       border-bottom: 1px solid #ccc;
       span{
         flex:1;
-        text-align: right;
       }
     }
   }
@@ -70,10 +76,22 @@ export default {
     text-align: left;
     padding: .16rem .2rem;
     position: relative;
+        background: #fff;
     img{
       position: absolute;
       top: .1rem;
       right: .1rem;
+    }
+  }
+  .logout{
+    text-align: center;
+    button{
+      border: none;
+      outline: none;
+      color:#fff;
+      background: #1296DB;
+      padding:.1rem .3rem;
+      border-radius: .1rem;
     }
   }
   }

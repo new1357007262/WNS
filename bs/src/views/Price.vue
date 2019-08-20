@@ -1,6 +1,6 @@
 <template>
   <div class="price">
-  <header>贷款通知<span class="goBack" @click="$router.go(-1)"> < </span></header>
+  <header>贷款通知<img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt /></header>
   </div>
 </template>
 <script>
@@ -17,10 +17,11 @@ export default {
     font-size: 16px;
     font-weight: 800;
     .goBack{
-      position: absolute;
-      top:.05rem;
-      left:.13rem;
-      font-size: 40px;
+       position: absolute;
+      top: 0.05rem;
+      left: 0px;
+      width: 0.5rem;
+      height: 0.5rem;
     }
   }
   }

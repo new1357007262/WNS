@@ -14,7 +14,8 @@ class CourseForm extends React.Component{
       this.loadCollage();
     }
     loadCollage=()=>{
-      let url = "http://localhost:8083/major/findAllWithExtend";
+      // let url = "http://localhost:8083/major/findAllWithExtend";
+      let url = "http://203.195.219.213:8083/major/findAllWithExtend";
       $.get(url,({status,data})=>{
           if(status === 200){
               this.setState({majors:data})

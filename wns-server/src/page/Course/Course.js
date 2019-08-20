@@ -21,7 +21,8 @@ class Course extends React.Component{
     //获取数据库中的所有数据
     loadCourses(){
         this.setState({dataloading:true})
-        let url = "http://localhost:8083/course/findAllWithMajor";
+        // let url = "http://localhost:8083/course/findAllWithMajor";
+        let url = "http://203.195.219.213:8083/course/findAllWithMajor";
         $.get(url,({status,data})=>{
             if(status === 200 && data != null){
                     this.setState({
@@ -41,7 +42,8 @@ class Course extends React.Component{
     }
     // 删除单个
     handleDelete=(id)=>{
-        let url ="http://localhost:8083/course/delById?id="+id;
+        // let url ="http://localhost:8083/course/delById?id="+id;
+        let url ="http://203.195.219.213:8083/course/delById?id="+id;
         $.get(url,({status,message})=>{
             if(status === 200){
                 this.loadCourses();
@@ -54,7 +56,8 @@ class Course extends React.Component{
     Alldel=()=>{
         let {selectedRowKeys} = this.state;
         this.setState({loading:true})
-        let url ="http://localhost:8083/course/delById";
+        // let url ="http://localhost:8083/course/delById";
+        let url ="http://203.195.219.213:8083/course/delById";
         selectedRowKeys.forEach(item=>{
             console.log(item)
              $.get(url,{id:item},({status,message})=>{
@@ -75,8 +78,10 @@ class Course extends React.Component{
     // form验证提交
     submitHandler=(e)=>{
         e.preventDefault();
-        let url = "http://localhost:8083/course/saveOrupdate";
-        let url1 = "http://localhost:8083/course/findByName";
+        // let url = "http://localhost:8083/course/saveOrupdate";
+        // let url1 = "http://localhost:8083/course/findByName";
+        let url = "http://203.195.219.213:8083/course/saveOrupdate";
+        let url1 = "http://203.195.219.213:8083/course/findByName";
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
                 console.log(values)

@@ -12,19 +12,10 @@ class TUserForm extends React.Component{
     componentDidMount(){
       // this.loadMajors();
     }
-    // loadMajors=()=>{
-    //   let url = "http://localhost:8083/major/findAllWithExtend";
-    //   $.get(url,({status,message,data})=>{
-    //       if(status === 200 ){
-    //         this.setState({majors:data})
-    //       }else{
-    //         alert(message)
-    //       }
-    //   })
-    // }
     // 自定义校验器 
     checkUser=(rule, value, callback)=>{
-        let url = "http://localhost:8083/teaUser/CheckUsername";
+        // let url = "http://localhost:8083/teaUser/CheckUsername";
+        let url = "http://203.195.219.213:8083/teaUser/CheckUsername";
         setTimeout(() => {
           // 为防止在更新时做校验
           if(!this.props.TeaUser){
@@ -39,21 +30,6 @@ class TUserForm extends React.Component{
           }
         }, 1000);
     }
-    // saveCardNumber=(rule,value,callback)=>{
-    //    setTimeout(() => {
-    //     if(value.length !== 18 ){
-    //       callback("请输入正确的身份证号")
-    //   }else{
-    //     this.setState({cardNumber:value})
-    //     callback()
-    //   }
-    //    }, 1000);
-    // }
-    // substr=(str)=>{
-    //   let LenMax = str.length;
-    //     let newstr = str.substring(LenMax-6,LenMax)
-    //     return newstr;
-    // }
     render(){
         const { getFieldDecorator,  getFieldError, isFieldTouched } = this.props.form;
         const formItemLayout = {
@@ -69,14 +45,9 @@ class TUserForm extends React.Component{
         const usernameError = isFieldTouched('username') && getFieldError('username');
         const passowrdError = isFieldTouched('password') && getFieldError('password');
         const realnameError = isFieldTouched('realname') && getFieldError('realname');
-        // const cardNumberError = isFieldTouched('cardNumber') && getFieldError('cardNumber');
-        // const houseNumberError = isFieldTouched('houseNumber') && getFieldError('houseNumber');
-        // const studentStatusError = isFieldTouched('studentStatus') && getFieldError('studentStatus');
-        // const majorIdError = isFieldTouched('majorId') && getFieldError('majorId');
           // 注册id属性
         getFieldDecorator("id")
  
-        // const {majors} = this.state;
         return (
             <div>
                  <Form {...formItemLayout} layout="inline" hideRequiredMark>
@@ -115,50 +86,6 @@ class TUserForm extends React.Component{
                         />,
                       )}
                     </Form.Item>
-                    {/* <Form.Item style={{width:458}} label="身份证号" validateStatus={cardNumberError ? 'error' : ''} help={cardNumberError || ''}>
-                      {getFieldDecorator('cardNumber',{
-                        rules: [{validator:this.saveCardNumber}],
-                      })(
-                        <Input
-                          prefix={<Icon type="wallet" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                           placeholder="请输入身份证号" 
-                        />,
-                      )}
-                    </Form.Item>
-                   <Form.Item style={{width:458}} label="宿舍门牌号" validateStatus={houseNumberError ? 'error' : ''} help={houseNumberError || ''}>
-                      {getFieldDecorator('houseNumber',{
-                        rules: [{ required: true, message: '门牌号不能为空!' }],
-                      })(
-                        <Input
-                        prefix={<Icon type="pay-circle"  style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="请输入宿舍门牌号" 
-                        />,
-                        )}
-                    </Form.Item>
-                    <Form.Item style={{width:458}} label="学生报到状态" validateStatus={studentStatusError ? 'error' : ''} help={studentStatusError || ''}>
-                      {getFieldDecorator('studentStatus',{
-                         initialValue:0,     //加默认值
-                      })(
-                        <Input
-                        prefix={<Icon type="phone"  style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        readOnly
-                        placeholder="初始默认为0（未报到状态）" 
-                        />,
-                        )}
-                    </Form.Item>
-                    <Form.Item style={{width:458}} label="专业名称" validateStatus={majorIdError ? 'error' : ''} help={majorIdError || ''}>
-                      {getFieldDecorator('majorId',{
-                        //  initialValue:1,     //加默认值
-                      })(
-                        <Select placeholder="请选择专业">
-                            { majors.map(item =>{
-                              return (<Select.Option value={item.id}>{item.name}</Select.Option>)
-                            })
-                          }
-                         </Select>
-                        
-                        )}
-                    </Form.Item> */}
                 </Form>
 
             </div>

@@ -38,7 +38,8 @@ class Register extends React.Component{
     }
 
     checkUser=(rule, value, callback)=>{
-        let url = "http://localhost:8083/teaUser/CheckUsername";
+        // let url = "http://localhost:8083/teaUser/CheckUsername";
+        let url = "http://203.195.219.213:8083/teaUser/CheckUsername";
         $.get(url,{username:value},({status,message,data})=>{
             if(status === 200 && data !=null){
                 callback("用户名存在请重新输入")

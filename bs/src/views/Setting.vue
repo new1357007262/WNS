@@ -1,16 +1,16 @@
 <template >
   <div class="setting">
     <header>
-      完善信息
-      <span class="goBack" @click="$router.go(-1)"><</span>
+      个人设置
+      <img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt />
     </header>
     <router-link to="/setting" class="my-setting" tag="section">
       个人信息修改
-      <img src="../assets/images/xiayibu.png" alt />
+      <img src="../../public/images/xiayibu.png" alt />
     </router-link>
-      <router-link to="/setting" class="my-setting" tag="section">
+    <router-link to="/setting" class="my-setting" tag="section">
       密码修改
-      <img src="../assets/images/xiayibu.png" alt />
+      <img src="../../public/images/xiayibu.png" alt />
     </router-link>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
 .setting {
   font-size: 14px;
   height: 100vh;
-  background: #E4F4EA;
+  background: #e4f4ea;
   header {
     background: #1296db;
     padding: 0.2rem;
@@ -34,8 +34,9 @@ export default {
     .goBack {
       position: absolute;
       top: 0.05rem;
-      left: 0.13rem;
-      font-size: 40px;
+      left: 0px;
+      width: 0.5rem;
+      height: 0.5rem;
     }
   }
   .my-setting {

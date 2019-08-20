@@ -30,7 +30,8 @@ class LoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
             if (!err) {
               console.log('Received values of form: ', values);
-              let url = "http://localhost:8083/teaUser/Login";
+              // let url = "http://localhost:8083/teaUser/Login";
+              let url = "http://203.195.219.213:8083/teaUser/Login";
               $.get(url,values,({status,message,data})=>{
                 if(status === 200 && data!=null){
                   console.log(JSON.stringify(data))
@@ -53,7 +54,8 @@ class LoginForm extends React.Component {
       this.state.form.validateFieldsAndScroll((err,values)=>{
         if(!err){
           console.log("====="+JSON.stringify(values));
-          let url = "http://localhost:8083/teaUser/saveOrUpdate";
+          // let url = "http://localhost:8083/teaUser/saveOrUpdate";
+          let url = "http://203.195.219.213:8083/teaUser/saveOrUpdate";
           $.post(url,values,({status,message})=>{
             if(status === 200){
               

@@ -5,28 +5,28 @@
       <router-link
         to="/home/hme"
         class="item"
-        @click.native="toggleActiveHandle($event,'isActive')"
+        @click.native="toggleActiveHandle(1)"
       >
-        <img v-if="isActive" src="../assets/images/route1-o.png" alt />
-        <img v-else src="../assets/images/route1.png" alt />
+        <img v-if="isActive==1" src="../../public/images/route1.png" alt />
+        <img v-else   src="../../public/images/route1-o.png" alt />
         <p>首页</p>
       </router-link>
       <router-link
         to="/home/scholl"
         class="item"
-        @click.native="toggleActiveHandle($event,'isActive2')"
+        @click.native="toggleActiveHandle(2)"
       >
-        <img v-if="isActive2" src="../assets/images/route2-o.png" alt />
-        <img v-else src="../assets/images/route2.png" alt />
+        <img v-if="isActive==2" src="../../public/images/route2.png" alt />
+        <img v-else  src="../../public/images/route2-o.png" alt />
         <p>校园导航</p>
       </router-link>
       <router-link
         to="/home/profile"
         class="item"
-        @click.native="toggleActiveHandle($event,'isActive3')"
+        @click.native="toggleActiveHandle(3)"
       >
-        <img v-if="isActive3" src="../assets/images/route3-o.png" alt />
-        <img v-else src="../assets/images/route3.png" alt />
+        <img v-if="isActive==3"  src="../../public/images/route3.png" alt />
+        <img v-else  src="../../public/images/route3-o.png" alt />
         <p>我的</p>
       </router-link>
     </section>
@@ -36,33 +36,30 @@
 import { Swipe, SwipeItem } from "mint-ui";
 export default {
   name: "Home",
+  props:['isActiveApp'],
   data() {
     return {
       loading: false,
-      isActive: false,
-      isActive2: true,
-      isActive3: true
+      isActive: 1,
     };
   },
+  created(){
+    this.isActive = this.isActiveApp
+  },
+  // watch:{
+  //    '$route'(to, from) {
+  //      this.isActive = to.meta.isActive
+  //      console.log(to.meta)
+  //      console.log(from.meta)
+  //   }
+  // },
   components: {
     Swipe,
     SwipeItem
   },
   methods: {
-    toggleActiveHandle(e, msg) {
-      if ('isActive' === msg) {
-        this.isActive = false;
-        this.isActive2 = true;
-        this.isActive3 = true;
-      } else if ('isActive2' === msg) {
-        this.isActive = true;
-        this.isActive2 = false;
-        this.isActive3 = true;
-      } else if ('isActive3' === msg) {
-        this.isActive = true;
-        this.isActive2 = true;
-        this.isActive3 = false;
-      }
+    toggleActiveHandle(msg) {
+      this.isActive = msg
     },
     loadMore() {
       this.loading = true;
@@ -91,10 +88,6 @@ export default {
     .item {
       flex: 1;
       text-align: center;
-      img {
-      }
-      p {
-      }
     }
     .router-link-active {
       color: #1296db;

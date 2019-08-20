@@ -14,7 +14,8 @@ class MajorForm extends React.Component{
       this.loadCollage();
     }
     loadCollage=()=>{
-      let url = "http://localhost:8083/collage/FindAll";
+      // let url = "http://localhost:8083/collage/FindAll";
+      let url = "http://203.195.219.213:8083/collage/FindAll";
       $.get(url,({status,data})=>{
           if(status === 200){
               this.setState({collages:data})

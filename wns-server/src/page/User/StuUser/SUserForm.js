@@ -15,7 +15,8 @@ class SUserForm extends React.Component{
       this.loadMajors();
     }
     loadMajors=()=>{
-      let url = "http://localhost:8083/major/findAllWithExtend";
+      // let url = "http://localhost:8083/major/findAllWithExtend";
+      let url = "http://203.195.219.213:8083/major/findAllWithExtend";
       $.get(url,({status,message,data})=>{
           if(status === 200 ){
             this.setState({majors:data})
@@ -26,7 +27,8 @@ class SUserForm extends React.Component{
     }
     // 自定义校验器 
     checkUser=(rule, value, callback)=>{
-        let url = "http://localhost:8083/stuUser/CheckUsername";
+        // let url = "http://localhost:8083/stuUser/CheckUsername";
+        let url = "http://203.195.219.213:8083/stuUser/CheckUsername";
         setTimeout(() => {
           // 为防止在更新时做校验
           if(!this.props.StuUser){

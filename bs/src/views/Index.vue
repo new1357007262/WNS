@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img class="title-img1" src="../assets/images/bg-login-title.png" alt />
-    <img class="title-img2" src="../assets/images/bg-login-title2.png" alt />
+    <img class="title-img1" src="../../public/images/bg-login-title.png" alt />
+    <img class="title-img2" src="../../public/images/bg-login-title2.png" alt />
     <h1 class="title">智能迎新系统</h1>
     <section class="frm">
       <section class="username-box">
@@ -9,10 +9,10 @@
         <input type="text" id="username" class="username" placeholder="请输入用户名"/>
       </section>
       <section class="password-box">
-        <label for="password" class="pwd">密&nbsp;码：</label>
+        <label for="password" class="pwd">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
         <input type="password" id="password" class="password" placeholder="请输入密码" />
       </section>
-      <input type="button" value="登录" class="btn-login" @click="()=>{this.$router.push('/home')}" />
+      <input type="button" value="登录" class="btn-login" @click="$router.push('/home')" />
     </section>
     <section class="tips">
       <h2>温馨提示</h2>
@@ -36,14 +36,14 @@
 </template>
 <script>
 export default {
-  name: 'Index'
-}
+  name: "Index"
+};
 </script>
 <style lang="scss" scoped>
 .home {
    width: 100vw;
   height: 100vh;
-  background: url('../assets/images/bg-login.jpg') no-repeat;
+  background: url('../../public/images/bg-login.jpg') no-repeat;
   background-size: contain;
   position: relative;
   .title-img1 {
@@ -76,9 +76,11 @@ export default {
       padding: .16rem 0px;
       border-bottom: 1px solid #b9b5b5;
       .uname {
+        width:40%;
         font-weight: 800;
       }
       .username {
+        width:60%;
         background: rgba(187, 187, 187, 0);
       }
     }
@@ -86,9 +88,11 @@ export default {
       padding: .16rem 0px;
       border-bottom: 1px solid #b9b5b5;
       .pwd {
+        width:40%;
         font-weight: 800;
       }
       .password {
+        width:60%;
         background: rgba(187, 187, 187, 0);
       }
     }

@@ -1,8 +1,9 @@
 <template>
   <div class="profile">
-    <header>我的信息</header>
     <section class="card">
-      <section class="name">刘</section>
+      <section class="name">
+        <img src="../../public/images/avatar.png" alt="">
+      </section>
       <section class="desc">
         <section class="my-name">
           <span>刘少雄</span>
@@ -44,7 +45,9 @@ export default {
     font-size: 16px;
     display: flex;
     padding: 0.2rem;
-    background: #fff;
+    background: url('../../public/images/card-bg.jpg') no-repeat;
+    background-size:cover;
+    color: #fff;
     .name {
       width: 0.85rem;
       height: 0.85rem;
@@ -52,20 +55,24 @@ export default {
       text-align: center;
       border-radius: 50%;
       background: #7fd90c;
+      img{
+        width:100%;
+        height: 100%;
+      }
     }
     .desc {
       padding-left: 0.1rem;
+
       .my-name {
         padding-bottom: 0.1rem;
+        color: #fff;
         span:nth-of-type(1) {
           font-size: 28px;
-          color: #101010;
           font-weight: 800;
           padding-right: 0.1rem;
         }
         span:nth-of-type(2) {
           font-size: 14px;
-          color: #101010;
         }
       }
       p {

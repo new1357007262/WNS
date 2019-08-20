@@ -15,8 +15,10 @@ class StuForm extends React.Component{
     }
     // 自定义校验器 
     checkUser=(rule, value, callback)=>{
-        let url = "http://localhost:8083/stuUser/CheckUsername";
-        let url2 = "http://localhost:8083/major/FindById";
+        // let url = "http://localhost:8083/stuUser/CheckUsername";
+        // let url2 = "http://localhost:8083/major/FindById";
+        let url = "http://203.195.219.213:8083/stuUser/CheckUsername";
+        let url2 = "http://203.195.219.213:8083/major/FindById";
         setTimeout(() => {
           $.get(url,{username:value},({status,message,data})=>{
               if(status !== 200 && data == null){
