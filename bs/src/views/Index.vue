@@ -6,13 +6,19 @@
     <section class="frm">
       <section class="username-box">
         <label for="username" class="uname">用户名：</label>
-        <input type="text" id="username" class="username" placeholder="请输入用户名"/>
+        <input type="text" id="username" v-model="username" class="username" placeholder="请输入用户名" />
       </section>
       <section class="password-box">
         <label for="password" class="pwd">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
-        <input type="password" id="password" class="password" placeholder="请输入密码" />
+        <input
+          type="password"
+          id="password"
+          class="password"
+          v-model="password"
+          placeholder="请输入密码"
+        />
       </section>
-      <input type="button" value="登录" class="btn-login" @click="$router.push('/home')" />
+      <input type="button" value="登录" @click="login" class="btn-login" />
     </section>
     <section class="tips">
       <h2>温馨提示</h2>
@@ -27,23 +33,53 @@
         </li>
         <li>
           登录失败或用户不存在请及时
-          联系学校。<br><br>
-          学校热线：0472-6193093
+          联系学校。
+          <br />
+          <br />学校热线：0472-6193093
         </li>
       </ol>
     </section>
   </div>
 </template>
 <script>
+import { MessageBox } from 'mint-ui'
 export default {
-  name: "Index"
+  name: "Index",
+  data() {
+    return {
+      username: "",
+      password: "",
+      userinfo: null
+    };
+  },
+  methods: {
+    login() {
+      const { username, password } = this;
+      this.$axios
+        .get("http://203.195.219.213:8083/stuUser/Login", {
+          params: {
+            username,
+            password
+          }
+        })
+        .then(res => {
+          if (res.data.data !== null) {
+            this.userinfo = res.data.data;
+            localStorage.setItem("isLogin", JSON.stringify(this.userinfo));
+            this.$router.push("/home");
+          }else{
+            MessageBox('提示', '用户名或者密码错误');
+          }
+        });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 .home {
-   width: 100vw;
+  width: 100vw;
   height: 100vh;
-  background: url('../../public/images/bg-login.jpg') no-repeat;
+  background: url("../../public/images/bg-login.jpg") no-repeat;
   background-size: contain;
   position: relative;
   .title-img1 {
@@ -65,64 +101,64 @@ export default {
     margin-top: 0.27rem;
   }
   .frm {
-    border-radius:.1rem;
+    border-radius: 0.1rem;
     text-align: center;
-    padding: .2rem;
-    margin: .2rem auto;
+    padding: 0.2rem;
+    margin: 0.2rem auto;
     width: 2.6rem;
     background: rgba(255, 255, 255, 0.1);
     font-size: 14px;
     .username-box {
-      padding: .16rem 0px;
+      padding: 0.16rem 0px;
       border-bottom: 1px solid #b9b5b5;
       .uname {
-        width:40%;
+        width: 40%;
         font-weight: 800;
       }
       .username {
-        width:60%;
+        width: 60%;
         background: rgba(187, 187, 187, 0);
       }
     }
     .password-box {
-      padding: .16rem 0px;
+      padding: 0.16rem 0px;
       border-bottom: 1px solid #b9b5b5;
       .pwd {
-        width:40%;
+        width: 40%;
         font-weight: 800;
       }
       .password {
-        width:60%;
+        width: 60%;
         background: rgba(187, 187, 187, 0);
       }
     }
-    .btn-login{
-      background: #39EEC1;
-      padding: .06rem .4rem;
+    .btn-login {
+      background: #39eec1;
+      padding: 0.06rem 0.4rem;
       border-radius: 10px;
       margin-top: 20px;
       color: #fff;
-      opacity: .7;
+      opacity: 0.7;
     }
   }
   .tips {
-    border-radius: .2rem;
+    border-radius: 0.2rem;
     width: 3rem;
-    margin:.2rem auto;
+    margin: 0.2rem auto;
     font-size: 14px;
-    padding: .1rem .2rem;
+    padding: 0.1rem 0.2rem;
     color: #101010;
-    background: rgba(242,241,241,.2);
-    h2{
-      color: #E51C23;
-      font-size: .2rem;
-      padding: .05rem;
+    background: rgba(242, 241, 241, 0.2);
+    h2 {
+      color: #e51c23;
+      font-size: 0.2rem;
+      padding: 0.05rem;
     }
-    ol{
-      padding-left: .14rem;
+    ol {
+      padding-left: 0.14rem;
       list-style: decimal;
-      li{
-        padding: .1rem 0;
+      li {
+        padding: 0.1rem 0;
         list-style: decimal;
         color: #101010;
         font-weight: 800;

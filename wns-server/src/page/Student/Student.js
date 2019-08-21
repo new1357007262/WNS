@@ -87,6 +87,7 @@ class Student extends React.Component{
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
                 if(values.id === undefined){
+                    console.log(values)
                     // 保存
                     $.get(url1,{studentNumber:values.studentNumber},({data})=>{
                         if(data.length !== 0){

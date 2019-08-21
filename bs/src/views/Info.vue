@@ -1,40 +1,64 @@
 <template>
   <div class="info">
      <header>个人信息  <img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt=""></header>
-     <section class="info-box">
+     <section class="info-box" v-if="user">
        <section class="info-item">
          <span>姓名</span>
-         <span>刘少雄</span>
+         <span>{{ user.name }}</span>
        </section>
        <section class="info-item">
          <span>性别</span>
-         <span>男</span>
+         <span>{{ user.gender  }}</span>
        </section>
        <section class="info-item">
          <span>宿舍门牌号</span>
-         <span>6#207</span>
+         <span>{{ user.stuUser.houseNumber }}</span>
        </section>
         <section class="info-item">
          <span>家庭住址</span>
-         <span>内蒙古呼尔浩特市赛罕区</span>
+         <span>{{ user.address }}</span>
+       </section>
+       <section class="info-item">
+         <span>助理班主任</span>
+         <span>{{ user.stuUser.major.assistant }}</span>
        </section>
        <section class="info-item">
          <span>助理班主任联系电话</span>
-         <span>110</span>
+         <span>{{ user.stuUser.major.phone }}</span>
        </section>
      </section>
       <router-link to="/setting" class="my-setting" tag="section">
          个人设置
          <img src="../../public/images/xiayibu.png" alt="">
        </router-link >
-       <router-link to="/index" tag="section" class="logout">
-        <button>退出</button>
+       <router-link to="/home" tag="section" class="logout">
+        <button @click="logout">退出</button>
        </router-link>
   </div>
 </template>
 <script>
 export default {
-  name:'Info'
+  name:'Info',
+  data(){
+    return {
+      user:null
+    }
+  },
+  methods:{
+    logout(){
+      localStorage.removeItem('isLogin')
+    }
+  },
+  mounted() {
+  this.user = JSON.parse(localStorage.getItem('isLogin'))
+  this.$axios.get('http://203.195.219.213:8083/stuBf/findByUserid',{
+    params:{
+      userId:this.user.id
+    }
+  }).then((result) => {
+    this.user =  result.data.data
+  })
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -50,10 +74,10 @@ export default {
     position: relative;
     .goBack{
     position: absolute;
-      top: .05rem;
+      top: .08rem;
       left: 0px;
-      width: .5rem;
-      height: .5rem;
+      width: .4rem;
+      height: .4rem;
     }
   }
   .info-box{

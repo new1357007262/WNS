@@ -1,16 +1,16 @@
 <template>
   <div class="profile">
-    <section class="card">
+    <section class="card" v-if="user">
       <section class="name">
         <img src="../../public/images/avatar.png" alt="">
       </section>
-      <section class="desc">
+      <section class="desc" >
         <section class="my-name">
-          <span>刘少雄</span>
-          <span>1614103009</span>
+          <span>{{ user.realname }}</span>
+          <span>{{ user.username }}</span>
         </section>
-        <p>信息科学与技术学院</p>
-        <p>物联网工程</p>
+        <p>{{ user.major.collage.name }}</p>
+        <p>{{ user.major.name }}</p>
       </section>
     </section>
     <section class="others">
@@ -29,7 +29,15 @@
 </template>
 <script>
 export default {
-  name: "Profile"
+  name: "Profile",
+  data(){
+    return {
+      user:null
+    }
+  },
+  mounted(){
+    this.user = JSON.parse(localStorage.getItem('isLogin'))
+  }
 };
 </script>
 <style lang="scss" scoped>

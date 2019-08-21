@@ -2,7 +2,7 @@
   <div class="infotwo">
     <header>
       完善信息
-      <img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt="">
+      <img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt />
     </header>
     <section class="frm">
       <section class="username item">
@@ -36,13 +36,16 @@
       </section>
       <section class="item">
         <label for="majorname">专业名称</label>
-        <input type="text" id="majorname" v-model="majorname" />
+        <input type="text" id="majorname" v-model="majorname" readonly />
       </section>
-      <input type="hidden" v-model="userid">
+      <Button type="default" size="large" @click="updateInfo">完成</Button>
+      <input type="hidden" v-model="userid" />
     </section>
   </div>
 </template>
 <script>
+import { Button,MessageBox } from "mint-ui"
+import qs from 'qs'
 export default {
   name: "InfoTwo",
   data() {
@@ -54,10 +57,57 @@ export default {
       useraddress: "",
       payment: 12222,
       majorname: "物联网工程",
-      userid:''
+      userid: ""
     };
   },
-  components: {}
+  components: { Button },
+  beforeMount() {
+    let user = JSON.parse(localStorage.getItem("isLogin"));
+    this.username = user.realname;
+    this.usernum = user.username;
+    this.payment = user.major.paymentNumber;
+    this.majorname = user.major.name;
+  },
+  methods: {
+    updateInfo() {
+      let {
+        usernum,
+        username,
+        gender,
+        payment,
+        userphone,
+        useraddress,
+        majorname
+      } = this;
+      let params = qs.stringify({
+          "studentNumber": usernum,
+          "name": username,
+          "gender": gender,
+          "paymentNumber": payment,
+          "telephone": userphone,
+          "address": useraddress,
+          "userId": JSON.parse(localStorage.getItem("isLogin")).id,
+          "majorName": majorname
+        })
+        let p = qs.stringify({
+          "username": usernum,
+        })
+      this.$axios.post('http://203.195.219.213:8083/stuBf/saveOrUpdate',
+        params
+      ).then((result) => {
+        // console.log(result.data)
+        this.$axios.post('http://203.195.219.213:8083/stuUser/updatestatus',p).then((result) => {
+            MessageBox('提示', result.data.message);
+            this.$router.push('/home/hme')
+        }).catch((err) => {
+
+        });
+      }).catch((err) => {
+
+      });
+
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -70,15 +120,18 @@ export default {
     font-weight: 800;
     .goBack {
       position: absolute;
-      top: .05rem;
+      top: 0.08rem;
       left: 0px;
-      width: .5rem;
-      height: .5rem;
+      width: 0.4rem;
+      height: 0.4rem;
     }
   }
   .frm {
-    font-size: 18px;
+    font-size: 14px;
     padding: 0.1rem 0.2rem;
+    .mint-button--large {
+      margin-top: 0.1rem;
+    }
     .item {
       padding: 0.16rem 0.1rem;
       align-items: center;
@@ -89,7 +142,7 @@ export default {
       }
       input {
         width: 70%;
-        font-size: 18px;
+        font-size: 14px;
       }
     }
     .gender {

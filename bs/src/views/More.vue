@@ -1,6 +1,6 @@
 <template>
   <div class="more">
-    <header>更多<span class="goBack" @click="$router.go(-1)"> < </span></header>
+   <header>更多<img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt /></header>
   </div>
 </template>
 <script>
@@ -18,8 +18,10 @@ export default {
     font-weight: 800;
     .goBack{
       position: absolute;
-      top:.05rem;
-      left:.13rem;
+      top:.08rem;
+      width: .4rem;
+      height: .4rem;
+      left:.03rem;
       font-size: 40px;
     }
   }

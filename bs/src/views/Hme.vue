@@ -15,12 +15,18 @@
       </SwipeItem>
     </Swipe>
     <nav class="nav-top">
-      <router-link to="/infotwo" tag="section" class="item" >
+      <!-- <router-link to="/infotwo" tag="section" class="item" >
         <section class="img-box">
           <img src="../../public/images/info.png" alt />
         </section>
         <p>完善信息</p>
-      </router-link>
+      </router-link>-->
+      <section @click="goInfo" class="item">
+        <section class="img-box">
+          <img src="../../public/images/info.png" alt />
+        </section>
+        <p>完善信息</p>
+      </section>
       <router-link to="/price" tag="section" class="item">
         <section class="img-box">
           <img src="../../public/images/price.png" alt />
@@ -40,9 +46,12 @@
         <p>更多</p>
       </router-link>
     </nav>
-    <section class="info" v-infinite-scroll="loadMore"
-        infinite-scroll-disabled="loading"
-        infinite-scroll-distance="10">
+    <section
+      class="info"
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="10"
+    >
       <section class="item">
         <section class="title">
           <span>入学须知</span>
@@ -103,12 +112,13 @@
   </div>
 </template>
 <script>
-import { Swipe, SwipeItem } from "mint-ui";
+import { Swipe, SwipeItem,MessageBox,Indicator } from "mint-ui";
 export default {
-  name:'Hme',
+  name: "Hme",
   data() {
     return {
-      loading: false
+      loading: false,
+      position: [116.419356, 39.941567]
     };
   },
   components: {
@@ -121,12 +131,98 @@ export default {
       setTimeout(() => {
         this.loading = false;
       }, 2500);
+    },
+    goInfo() {
+      this.getLocation()
+    },
+    getLocation() {
+      Indicator.open({
+  text: '玩命加载中...',
+  spinnerType: 'fading-circle'
+});
+      // console.log('222')
+      AMap.plugin("AMap.Geolocation", () => {
+        var geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true,
+          timeout: 10000
+
+        });
+        geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, "complete", this.onComplete);
+        AMap.event.addListener(geolocation, "error", this.onError);
+      });
+    },
+    onComplete(data) {
+      Indicator.close();
+      //  console.log('33333333')
+      // data是具体的定位信息
+      // console.log(data);
+      var path = [
+        [116.169465, 39.93267],
+        [116.16026, 39.924492],
+        [116.186138, 39.879817],
+        [116.150625, 39.710019],
+        [116.183198, 39.70992],
+        [116.22695, 39.777616],
+        [116.421078, 39.810771],
+        [116.442621, 39.799892],
+        [116.463478, 39.790066],
+        [116.588276, 39.809551],
+        [116.536091, 39.808859],
+        [116.573856, 39.839643],
+        [116.70638, 39.91674],
+        [116.657285, 39.934545],
+        [116.600293, 39.93777],
+        [116.540039, 39.937968],
+        [116.514805, 39.982375],
+        [116.499935, 40.01371],
+        [116.54652, 40.030443],
+        [116.687668, 40.129961],
+        [116.539697, 40.080659],
+        [116.50339, 40.058474],
+        [116.4688, 40.052578]
+      ];
+      // console.log(this.position);
+      let newStr = this.position.join(",");
+      // console.log(newStr);
+      let newArr = (newStr = newStr.split(","));
+      let strLocation = newArr.join(' ')
+      let user = JSON.parse(localStorage.getItem('isLogin'))
+      user.studentLocation = strLocation
+      localStorage.setItem('isLogin',JSON.stringify(user))
+
+      // this.position = [data.position.lat,data.position.lng];
+      // console.log(this.position);
+      var isPointInRing = AMap.GeometryUtil.isPointInRing(this.position, path);
+       if(isPointInRing){
+        this.$router.push('/infotwo')
+      }else{
+          MessageBox('提示', '请到学校')
+      }
+    },
+    onError(data) {
+      this.getLngLatLocation();
+    },
+
+    // IP定位获取当前城市信息
+    getLngLatLocation() {
+      AMap.plugin("AMap.CitySearch", () => {
+        var citySearch = new AMap.CitySearch();
+        citySearch.getLocalCity(function(status, result) {
+          if (status === "complete" && result.info === "OK") {
+             Indicator.close();
+               this.$router.push('/infotwo')
+            // 查询成功，result即为当前所在城市信息
+            console.log(result);
+          }
+        });
+      });
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-  .hme {
+.hme {
   width: 100vw;
   height: 100vh;
   background: #e4f4ea;
@@ -211,11 +307,11 @@ export default {
   .info {
     font-size: 16px;
     position: absolute;
-    padding-bottom: .2rem;
+    padding-bottom: 0.2rem;
     left: 0;
     right: 0;
     top: 2.7rem;
-    bottom: .7rem;
+    bottom: 0.7rem;
     overflow: auto;
     .item {
       font-size: 16px;
@@ -254,19 +350,18 @@ export default {
         text-indent: 2em;
       }
       .time {
-    padding: 0.06rem 0.36rem;
-    position: relative;
-    font-size: 14px;
-    img {
-      position: absolute;
-      top: 0.05rem;
-      left: 0.13rem;
-      width: 0.17rem;
-      height: 0.17rem;
+        padding: 0.06rem 0.36rem;
+        position: relative;
+        font-size: 14px;
+        img {
+          position: absolute;
+          top: 0.05rem;
+          left: 0.13rem;
+          width: 0.17rem;
+          height: 0.17rem;
+        }
+      }
     }
   }
-    }
-  }
-
 }
 </style>

@@ -4,33 +4,28 @@
       我的课程
     <img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt />
     </header>
-    <section class="course">
-      <section class="item">
-        <span>物联网导论</span>
-        <span>主要物联网工程专业入门学科</span>
+    <section class="course" v-if="courseData.length>0">
+      <section class="item" v-for="(item) in courseData" :key="item.id">
+        <span>{{ item.name }}</span>
+        <span>{{ item.description }}</span>
       </section>
-      <section class="item">
-        <span>物联网导论</span>
-        <span>主要物联网工程专业入门学科</span>
-      </section>
-      <section class="item">
-        <span>物联网导论</span>
-        <span>主要物联网工程专业入门学科</span>
-      </section>
-      <section class="item">
-        <span>物联网导论</span>
-        <span>主要物联网工程专业入门学科</span>
-      </section>
-      <section class="item">
-        <span>物联网导论</span>
-        <span>主要物联网工程专业入门学科</span>
-      </section>
+
     </section>
   </div>
 </template>
 <script>
 export default {
-  name: "Cource"
+  name: "Cource",
+  data(){
+    return {
+      courseData:[]
+    }
+  },
+  mounted(){
+    this.$axios.get('http://203.195.219.213:8083/course/findAllWithMajor').then((result) => {
+      this.courseData = result.data.data
+    })
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -43,10 +38,10 @@ export default {
     font-weight: 800;
     .goBack {
       position: absolute;
-      top: 0.05rem;
+      top: 0.08rem;
       left: 0px;
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.4rem;
+      height: 0.4rem;
     }
   }
   .course {

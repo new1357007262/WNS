@@ -18,10 +18,10 @@ export default {
     font-weight: 800;
     .goBack{
        position: absolute;
-      top: 0.05rem;
+      top: 0.08rem;
       left: 0px;
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.4rem;
+      height: 0.4rem;
     }
   }
   }

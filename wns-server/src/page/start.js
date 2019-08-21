@@ -93,7 +93,7 @@ class Start extends React.Component{
         <Content style={{ margin: '16px 12px 0' }}>
           <div style={{ padding: 16, background: '#fff', minHeight:450  }}>
           <Switch>
-            <Route exact path="start" component={Student}/>
+            <Route  path="/start" component={Student}/>
             <Route path="/student" component={Student}/>
             <Route path="/stuUser" component={StuUser}/>
             <Route path="/teaUser" component={TeaUser}/>
