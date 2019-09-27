@@ -1,17 +1,17 @@
 <template>
   <div class="hme">
     <Swipe :show-indicators="true" class="swiper-box">
-      <SwipeItem class="swiper-item">
-        <img
-          src="https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/61414/28/1226/201567/5cf7b27cE43c69283/5912143df6a57957.jpg!cr_1125x549_0_72!q70.jpg.dpg"
-          alt
-        />
+      <SwipeItem class="swiper-item" >
+        <img src="http://www.bttc.edu.cn/img/banner_0.jpg" alt >
       </SwipeItem>
       <SwipeItem class="swiper-item">
-        <img
-          src="https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/54733/18/7779/84696/5d553c08E95d63d13/4b2ad59bfcfdaa0e.jpg!cr_1125x549_0_72!q70.jpg.dpg"
-          alt
-        />
+        <img src="http://www.bttc.edu.cn/img/banner_1.jpg" alt >
+      </SwipeItem>
+      <SwipeItem class="swiper-item">
+        <img src="http://www.bttc.edu.cn/img/banner_2.jpg" alt >
+      </SwipeItem>
+      <SwipeItem class="swiper-item">
+        <img src="http://www.bttc.edu.cn/img/banner_3.jpg" alt >
       </SwipeItem>
     </Swipe>
     <nav class="nav-top">
@@ -137,9 +137,9 @@ export default {
     },
     getLocation() {
       Indicator.open({
-  text: '玩命加载中...',
-  spinnerType: 'fading-circle'
-});
+        text: '玩命加载中...',
+        pinnerType: 'fading-circle'
+      });
       // console.log('222')
       AMap.plugin("AMap.Geolocation", () => {
         var geolocation = new AMap.Geolocation({
@@ -239,6 +239,7 @@ export default {
       height: 1.9rem;
       img {
         width: 100%;
+        height: 95%;
       }
     }
   }

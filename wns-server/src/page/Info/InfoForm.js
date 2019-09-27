@@ -1,5 +1,5 @@
 import React from "react";
-import { Form,Icon,Input,Upload,Button,AutoComplete} from "antd";
+import { Form,Icon,Input} from "antd";
 import $ from 'jquery'
 
 
@@ -8,11 +8,11 @@ class InfoForm extends React.Component{
         super(props)
         this.state={
             majors:[],
-            autoCompleteResult:[]
+            // autoCompleteResult:[]
         }
     }
     componentDidMount(){
-      this.loadCollage();
+      // this.loadCollage();
     }
     loadCollage=()=>{
       // let url = "http://localhost:8083/major/findAllWithExtend";
@@ -39,17 +39,17 @@ class InfoForm extends React.Component{
           })
         }, 1000);
     }
-    handleWebsiteChange = value => {
-      let autoCompleteResult;
-      if (!value) {
-        autoCompleteResult = [];
-      } else {
-        autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-      }
-      this.setState({ autoCompleteResult });
-    };
+    // handleWebsiteChange = value => {
+    //   let autoCompleteResult;
+    //   if (!value) {
+    //     autoCompleteResult = [];
+    //   } else {
+    //     autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
+    //   }
+    //   this.setState({ autoCompleteResult });
+    // };
     render(){
-      const {autoCompleteResult} = this.state;
+
         const { getFieldDecorator,  getFieldError, isFieldTouched } = this.props.form;
         const formItemLayout = {
             labelCol: {
@@ -61,13 +61,9 @@ class InfoForm extends React.Component{
               sm: { span:16 },
             },
           };
-          const websiteOptions = autoCompleteResult.map(website => (
-            <AutoComplete.Option key={website}>{website}</AutoComplete.Option>
-          ));
         const titleError = isFieldTouched('title') && getFieldError('title');
-        const descriptionError = isFieldTouched('description') && getFieldError('description');
-        const photoError = isFieldTouched('photo') && getFieldError('photo');
-        const urlError = isFieldTouched('url') && getFieldError('url');
+        const headingError = isFieldTouched('heading') && getFieldError('heading');
+        const decsError = isFieldTouched('decs') && getFieldError('decs');
           // 注册id属性
         getFieldDecorator("id")
  
@@ -75,53 +71,38 @@ class InfoForm extends React.Component{
         return (
             <div>
                  <Form {...formItemLayout} layout="inline" hideRequiredMark>
-                    <Form.Item style={{width:458}} label="课程名称" validateStatus={titleError ? 'error' : ''} help={titleError || ''}>
-                      {getFieldDecorator('title',{
+                    <Form.Item style={{width:458}} label="消息头" validateStatus={headingError ? 'error' : ''} help={headingError || ''}>
+                      {getFieldDecorator('heading',{
                         //  initialValue:defaultData.realname || '',     //加默认值
-                        rules: [{ required: true, message: '课程名不能为空!' }],
+                        rules: [{ required: true, message: '消息头不能为空!' }],
                       })(
                         <Input
                           prefix={<Icon type="schedule" style={{ color: 'rgba(0,0,0,.25)' }} />}
                           // readOnly   //只读
-                           placeholder="请输入课程名称" 
+                           placeholder="请输入消息头" 
                         />,
                       )}
                     </Form.Item>
-                    <Form.Item style={{width:458}} label="描述" validateStatus={descriptionError ? 'error' : ''} help={descriptionError || ''}>
-                      {getFieldDecorator('description', {
-                        rules: [{ required: true, message: '描述信息不能为空!' }],
+                    <Form.Item style={{width:458}} label="消息标题" validateStatus={titleError ? 'error' : ''} help={titleError || ''}>
+                      {getFieldDecorator('title', {
+                        rules: [{ required: true, message: '消息标题不能为空!' }],
                       })(
                         <Input
                           prefix={<Icon type="wallet" style={{ color: 'rgba(0,0,0,.25)' }} />}
                           // readOnly   //只读
-                           placeholder="请输入专业描述信息" 
+                           placeholder="请输入消息标题" 
                         />,
                       )}
                     </Form.Item>
-                    <Form.Item style={{width:458}} label="上传主题图片" validateStatus={photoError ? 'error' : ''} help={photoError || ''}>
-                      {getFieldDecorator('photo',{
+                    <Form.Item style={{width:458}} label="上传主题图片" validateStatus={decsError ? 'error' : ''} help={decsError || ''}>
+                      {getFieldDecorator('decs',{
                         // initialValue:major.paymentNumber,     //加默认值
                       })(
-                        <Upload name="logo" action="/upload.do" listType="picture">
-                          <Button>
-                            <Icon type="upload" /> Click to upload
-                          </Button>
-                        </Upload>,
-                        )}
-                    </Form.Item>
-                    <Form.Item style={{width:458}} label="消息路径地址" validateStatus={urlError ? 'error' : ''} help={urlError || ''}>
-                      {getFieldDecorator('url',{
-                        // initialValue:1,     //加默认值
-                        rules: [{ required: true, message: '路径不能为空!' }],
-                      })(
-                        <AutoComplete
-                          dataSource={websiteOptions}
-                          onChange={this.handleWebsiteChange}
-                        >
-                          <Input prefix={<Icon type="wallet" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        // readOnly   //只读
-                         placeholder="请输入专业描述信息" />
-                        </AutoComplete>,
+                        <Input.TextArea
+                          prefix={<Icon type="wallet" style={{ color: 'rgba(0,0,0,.25)' }} />} rows={4}
+                          // readOnly   //只读
+                           placeholder="请输入消息正文" 
+                        />,
                         )}
                     </Form.Item>
                 </Form>

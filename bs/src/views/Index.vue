@@ -24,16 +24,13 @@
       <h2>温馨提示</h2>
       <ol type="1">
         <li>
-          首次登录系统用户名为学号，
-          密码为身份证后六位。
+          首次登录系统用户名为学号，密码为身份证后六位。
         </li>
         <li>
-          建议用户第一次登录完后，尽
-          快修改登录密码
+          建议用户第一次登录完后，尽快修改登录密码
         </li>
         <li>
-          登录失败或用户不存在请及时
-          联系学校。
+          登录失败或用户不存在请及时联系学校。
           <br />
           <br />学校热线：0472-6193093
         </li>
@@ -76,11 +73,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+// 背景图自适应
+.home:before {
+  content: ' ';
+  position: fixed;
+  z-index: -1;top: 0;
+  right: 0;bottom: 0;left: 0;
+  background: url("../../public/images/bg-login.jpg") center 0 no-repeat;
+  background-size: cover;
+  }
 .home {
   width: 100vw;
   height: 100vh;
-  background: url("../../public/images/bg-login.jpg") no-repeat;
-  background-size: contain;
   position: relative;
   .title-img1 {
     margin-top: 0.25rem;

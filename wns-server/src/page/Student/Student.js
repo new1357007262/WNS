@@ -1,5 +1,6 @@
 import React from "react"
 import { Table, Button,Modal,Popconfirm} from 'antd';
+import {withRouter} from 'react-router-dom'
 import $ from "jquery"
 import StuForm from "./StuForm"
 
@@ -256,4 +257,4 @@ class Student extends React.Component{
     }
 }
 
-export default Student
+export default withRouter(Student)

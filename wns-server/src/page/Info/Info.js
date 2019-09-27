@@ -21,8 +21,8 @@ class Info extends React.Component{
     //获取数据库中的所有数据
     loadInfos(){
         this.setState({dataloading:true})
-        // let url = "http://localhost:8083/info/findAllQuery";
-        let url = "http://203.195.219.213:8083/info/findAllQuery";
+        // let url = "http://localhost:8083/info/FindAll";
+        let url = "http://203.195.219.213:8083/info/FindAll";
         $.get(url,({status,data})=>{
             if(status === 200 && data != null){
                     this.setState({
@@ -30,6 +30,7 @@ class Info extends React.Component{
                         dataloading:false
                     })
             }else{
+                alert("数据为空")
                 this.setState({dataloading:false})
             }
         })
@@ -77,6 +78,8 @@ class Info extends React.Component{
     }
     // form验证提交
     submitHandler=(e)=>{
+        let d = new Date();
+        let time = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
         e.preventDefault();
         // let url = "http://localhost:8083/info/saveOrUpdate";
         // let url1 = "http://localhost:8083/info/findByTitle";
@@ -85,25 +88,26 @@ class Info extends React.Component{
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
                 console.log(values)
-                if(values.id === undefined){
-                    // 保存
-                    $.get(url1,{title:values.title},(data)=>{
-                        if(data.length !=0){
-                            alert("消息已添加，请勿重复添加")
-                            this.handleCancel();
-                        }else{
-                            $.post(url,values,({status,message})=>{
-                                if(status === 200){
-                                    this.handleCancel();
-                                    this.loadInfos();
-                                }else{
-                                    alert(message)
-                                    this.handleCancel();
-                                }
-                            })
-                        }
-                    })
-                }else{
+                // if(values.id === undefined){
+                //     // 保存
+                //     $.get(url1,{title:values.title},(data)=>{
+                //         if(data.length !=0){
+                //             alert("消息已添加，请勿重复添加")
+                //             this.handleCancel();
+                //         }else{
+                //             $.post(url,values,({status,message})=>{
+                //                 if(status === 200){
+                //                     this.handleCancel();
+                //                     this.loadInfos();
+                //                 }else{
+                //                     alert(message)
+                //                     this.handleCancel();
+                //                 }
+                //             })
+                //         }
+                //     })
+                // }else{
+                    values.time = time
                     // 修改
                     $.post(url,values,({status,message})=>{
                         if(status === 200){
@@ -114,7 +118,7 @@ class Info extends React.Component{
                         this.handleCancel();
                         }
                     })
-                }
+                // }
             }
         })
     }
@@ -138,32 +142,32 @@ class Info extends React.Component{
     render(){
         const columns = [
             {
-              title: '消息标题',
-              dataIndex: 'title',
-              key:'title',
+              title: '消息顶部',
+              dataIndex: 'heading',
+              key:'heading',
               align:'center',
               width:150
             },
             {
-                title:'消息详情',
-                dataIndex:'description',
-                key:'description',
+                title:'消息标题',
+                dataIndex:'title',
+                key:'title',
                 align:'center',
                 width:350
             },
             {
-                title:'消息图片',
-                dataIndex:'photo',
-                key:'photo',
+                title:'消息正文',
+                dataIndex:'decs',
+                key:'decs',
                 width:160,
                 align:'center',
-                render:(text)=>{return (<span><img style={{width:50,height:50}} src={text}/></span>)}
+                // render:(text)=>{return (<span><img style={{width:50,height:50}} src={text}/></span>)}
                 // width:200
             },
             {
-                title:'消息路径地址',
-                dataIndex:'url',
-                key:'url',
+                title:'消息时间',
+                dataIndex:'time',
+                key:'time',
                 align:'center',
                 width:160
             },
@@ -196,7 +200,7 @@ class Info extends React.Component{
         return (
             <div>
                 <div style={{ marginBottom: 16 }}>
-                <Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加专业</Button>
+                <Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加消息</Button>
                 <Popconfirm title="Sure to delete?" onConfirm={this.Alldel}>
                     <Button type="danger"  disabled={!hasSelected} loading={loading}>
                         批量删除
@@ -209,7 +213,7 @@ class Info extends React.Component{
                 </div>
                 <Table loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={Infos} size="small" />
                 <Modal
-                title="课程信息"
+                title="消息信息"
                 visible={this.state.visible}
                 onOk={this.submitHandler}
                 onCancel={this.handleCancel}

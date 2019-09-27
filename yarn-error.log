@@ -1,0 +1,36 @@
+Arguments: 
+  F:\work\node\node.exe C:\Users\dell\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-route-dom
+
+PATH: 
+  C:\Program Files (x86)\Intel\iCLS Client\;C:\oraclexe\app\oracle\product\10.2.0\server\bin;C:\Program Files\Java\jdk1.8.0_74\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;c:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\;C:\Program Files (x86)\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies\;C:\WINDOWS\System32\OpenSSH\;E:\apache-maven-3.6.1-bin\apache-maven-3.6.1\bin;E:\apache-tomcat-8.0\bin;E:\apache-tomcat-8.0\lib;E:\spring-boot-cli-1.5.17.RELEASE-bin\spring-1.5.17.RELEASE\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\dell\AppData\Local\Android\Sdk\platform-tools;C:\Users\dell\AppData\Local\Android\Sdk\tools;E:\Android\gradle\gradle-4.10.1\bin\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseSVN\bin;F:\work\mysql5.5\bin;F:\Program Files\Git\cmd;F:\work\node;F:\work\node\node_gobal\node_modules;C:\Users\dell\AppData\Local\Microsoft\WindowsApps;F:\Program Files (x86)\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\dell\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\dell\AppData\Roaming\npm
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  10.16.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.npm.taobao.org/react-route-dom: Not found
+      at Request.params.callback [as _callback] (C:\Users\dell\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66058:18)
+      at Request.self.callback (C:\Users\dell\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129541:22)
+      at Request.emit (events.js:198:13)
+      at Request.<anonymous> (C:\Users\dell\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:130513:10)
+      at Request.emit (events.js:198:13)
+      at IncomingMessage.<anonymous> (C:\Users\dell\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:130435:12)
+      at Object.onceWrapper (events.js:286:20)
+      at IncomingMessage.emit (events.js:203:15)
+      at endReadableNT (_stream_readable.js:1129:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
