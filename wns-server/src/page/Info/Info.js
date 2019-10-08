@@ -76,15 +76,23 @@ class Info extends React.Component{
             });
         }, 1000);
     }
+    timeV=(d)=>{
+        if(d>10){
+            return "0"+d;
+        }else{
+            return d;
+        }
+    }
     // form验证提交
     submitHandler=(e)=>{
         let d = new Date();
-        let time = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+        
+        let time = d.getFullYear()+"-"+this.timeV(d.getMonth()+1)+"-"+this.timeV(d.getDate())+" "+this.timeV(d.getHours())+":"+this.timeV(d.getMinutes())+":"+this.timeV(d.getSeconds())
         e.preventDefault();
         // let url = "http://localhost:8083/info/saveOrUpdate";
         // let url1 = "http://localhost:8083/info/findByTitle";
         let url = "http://203.195.219.213:8083/info/saveOrUpdate";
-        let url1 = "http://203.195.219.213:8083/info/findByTitle";
+        // let url1 = "http://203.195.219.213:8083/info/findByTitle";
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
                 console.log(values)

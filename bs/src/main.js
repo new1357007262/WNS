@@ -5,10 +5,12 @@ import store from './store'
 import axios from 'axios'
 import {
   InfiniteScroll,
-  Indicator
+  Indicator,
+  // Toast
 } from 'mint-ui'
 
 Vue.use(InfiniteScroll)
+// Vue.use(Toast)
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios

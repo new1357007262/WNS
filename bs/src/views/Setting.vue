@@ -4,19 +4,30 @@
       个人设置
       <img class="goBack" @click="$router.go(-1)" src="../../public/images/back.png" alt />
     </header>
-    <router-link to="/setting" class="my-setting" tag="section">
+    <section @click="funs" class="my-setting">
       个人信息修改
       <img src="../../public/images/xiayibu.png" alt />
-    </router-link>
-    <router-link to="/setting" class="my-setting" tag="section">
+    </section>
+    <section @click="()=>{this.$router.push('/pwdedit')}" class="my-setting">
       密码修改
       <img src="../../public/images/xiayibu.png" alt />
-    </router-link>
+    </section>
   </div>
 </template>
 <script>
+import { MessageBox } from "mint-ui";
 export default {
-  name: "Setting"
+  name: "Setting",
+  mounted() {},
+  methods: {
+    funs() {
+      if (JSON.parse(localStorage.getItem("isLogin")).studentStatus == 0) {
+        MessageBox.alert("您未报到，请先完善个人信息");
+      } else {
+        this.$router.push("/useredit");
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -44,8 +44,8 @@
   </div>
 </template>
 <script>
-import { Button,MessageBox } from "mint-ui"
-import qs from 'qs'
+import { Button, MessageBox } from "mint-ui";
+import qs from "qs";
 export default {
   name: "InfoTwo",
   data() {
@@ -80,38 +80,50 @@ export default {
         majorname
       } = this;
       let params = qs.stringify({
-          "studentNumber": usernum,
-          "name": username,
-          "gender": gender,
-          "paymentNumber": payment,
-          "telephone": userphone,
-          "address": useraddress,
-          "userId": JSON.parse(localStorage.getItem("isLogin")).id,
-          "majorName": majorname
-        })
-        let p = qs.stringify({
-          "username": usernum,
-        })
-      this.$axios.post('http://203.195.219.213:8083/stuBf/saveOrUpdate',
-        params
-      ).then((result) => {
-        // console.log(result.data)
-        this.$axios.post('http://203.195.219.213:8083/stuUser/updatestatus',p).then((result) => {
-            MessageBox('提示', result.data.message);
-            this.$router.push('/home/hme')
-        }).catch((err) => {
-
-        });
-      }).catch((err) => {
-
+        studentNumber: usernum,
+        name: username,
+        gender: gender,
+        paymentNumber: payment,
+        telephone: userphone,
+        address: useraddress,
+        userId: JSON.parse(localStorage.getItem("isLogin")).id,
+        majorName: majorname
       });
-
+      let p = qs.stringify({
+        username: usernum
+      });
+      let locationp = qs.stringify({
+        studentLocation: JSON.parse(localStorage.getItem("isLogin"))
+          .studentLocation,
+        id: JSON.parse(localStorage.getItem("isLogin")).id
+      });
+      this.$axios
+        .post("http://203.195.219.213:8083/stuBf/saveOrUpdate", params)
+        .then(result => {
+          this.$axios
+            .post("http://203.195.219.213:8083/stuUser/updatestatus", p)
+            .then(result => {
+              this.$axios
+                .post(
+                  "http://203.195.219.213:8083/stuUser/updateLocation",
+                  locationp
+                )
+                .then(result => {
+                  MessageBox("提示", result.data.message);
+                  this.$router.push("/home/hme");
+                });
+            })
+            .catch(err => {});
+        })
+        .catch(err => {});
     }
   }
 };
 </script>
 <style lang="scss" scoped>
 .infotwo {
+   background: #e4f4ea;
+  height: 100vh;
   header {
     background: #1296db;
     padding: 0.2rem;
@@ -127,10 +139,11 @@ export default {
     }
   }
   .frm {
+    background-color: #fff;
     font-size: 14px;
     padding: 0.1rem 0.2rem;
     .mint-button--large {
-      margin-top: 0.1rem;
+      margin-top: 0.3rem;
     }
     .item {
       padding: 0.16rem 0.1rem;

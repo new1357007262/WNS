@@ -23,12 +23,8 @@
     <section class="tips">
       <h2>温馨提示</h2>
       <ol type="1">
-        <li>
-          首次登录系统用户名为学号，密码为身份证后六位。
-        </li>
-        <li>
-          建议用户第一次登录完后，尽快修改登录密码
-        </li>
+        <li>首次登录系统用户名为学号，密码为身份证后六位。</li>
+        <li>建议用户第一次登录完后，尽快修改登录密码</li>
         <li>
           登录失败或用户不存在请及时联系学校。
           <br />
@@ -39,7 +35,7 @@
   </div>
 </template>
 <script>
-import { MessageBox } from 'mint-ui'
+import { MessageBox } from "mint-ui";
 export default {
   name: "Index",
   data() {
@@ -62,10 +58,11 @@ export default {
         .then(res => {
           if (res.data.data !== null) {
             this.userinfo = res.data.data;
+
             localStorage.setItem("isLogin", JSON.stringify(this.userinfo));
             this.$router.push("/home");
-          }else{
-            MessageBox('提示', '用户名或者密码错误');
+          } else {
+            MessageBox("提示", "用户名或者密码错误");
           }
         });
     }
@@ -75,13 +72,16 @@ export default {
 <style lang="scss" scoped>
 // 背景图自适应
 .home:before {
-  content: ' ';
+  content: " ";
   position: fixed;
-  z-index: -1;top: 0;
-  right: 0;bottom: 0;left: 0;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: url("../../public/images/bg-login.jpg") center 0 no-repeat;
   background-size: cover;
-  }
+}
 .home {
   width: 100vw;
   height: 100vh;

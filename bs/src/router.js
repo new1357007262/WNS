@@ -43,6 +43,16 @@ export default new Router({
       component: () => import('./views/Setting.vue')
     },
     {
+      path: '/pwdedit',
+      name: 'pwdedit',
+      component: () => import('./views/PwdEdit.vue')
+    },
+    {
+      path: '/useredit',
+      name: 'useredit',
+      component: () => import('./views/UserEdit.vue')
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import('./views/Home.vue'),

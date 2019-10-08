@@ -1,17 +1,17 @@
 <template>
   <div class="hme">
     <Swipe :show-indicators="true" class="swiper-box">
-      <SwipeItem class="swiper-item" >
-        <img src="http://www.bttc.edu.cn/img/banner_0.jpg" alt >
+      <SwipeItem class="swiper-item">
+        <img src="http://www.bttc.edu.cn/img/banner_0.jpg" alt />
       </SwipeItem>
       <SwipeItem class="swiper-item">
-        <img src="http://www.bttc.edu.cn/img/banner_1.jpg" alt >
+        <img src="http://www.bttc.edu.cn/img/banner_1.jpg" alt />
       </SwipeItem>
       <SwipeItem class="swiper-item">
-        <img src="http://www.bttc.edu.cn/img/banner_2.jpg" alt >
+        <img src="http://www.bttc.edu.cn/img/banner_2.jpg" alt />
       </SwipeItem>
       <SwipeItem class="swiper-item">
-        <img src="http://www.bttc.edu.cn/img/banner_3.jpg" alt >
+        <img src="http://www.bttc.edu.cn/img/banner_3.jpg" alt />
       </SwipeItem>
     </Swipe>
     <nav class="nav-top">
@@ -31,7 +31,7 @@
         <section class="img-box">
           <img src="../../public/images/price.png" alt />
         </section>
-        <p>贷款通知</p>
+        <p>奖贷公告</p>
       </router-link>
       <router-link to="/course" tag="section" class="item">
         <section class="img-box">
@@ -52,74 +52,48 @@
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10"
     >
-      <section class="item">
+      <section class="item" v-for="(item,index) in list" :key="index">
         <section class="title">
-          <span>入学须知</span>
-          <span>查看</span>
-          <img src="../../public/images/new-card.png" alt />
+          <span>{{item.heading}}</span>
+          <span>{{item.title}}</span>
+          <img v-if="index<1" src="../../public/images/new-card.png" alt />
+          <img v-else src="../../public/images/hot-card.png" alt />
         </section>
-        <section
-          class="content"
-        >2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知</section>
+        <section class="content">{{item.decs}}</section>
         <section class="time">
           <img src="../../public/images/time.png" alt />
-          <span>2019-9-9 09:09:09</span>
-        </section>
-      </section>
-      <section class="item">
-        <section class="title">
-          <span>入学须知</span>
-          <span>查看</span>
-          <img src="../../public/images/new-card.png" alt />
-        </section>
-        <section
-          class="content"
-        >2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知</section>
-        <section class="time">
-          <img src="../../public/images/time.png" alt />
-          <span>2019-9-9 09:09:09</span>
-        </section>
-      </section>
-      <section class="item">
-        <section class="title">
-          <span>入学须知</span>
-          <span>查看</span>
-          <img src="../../public/images/new-card.png" alt />
-        </section>
-        <section
-          class="content"
-        >2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知</section>
-        <section class="time">
-          <img src="../../public/images/time.png" alt />
-          <span>2019-9-9 09:09:09</span>
-        </section>
-      </section>
-      <section class="item">
-        <section class="title">
-          <span>入学须知</span>
-          <span>查看</span>
-          <img src="../../public/images/new-card.png" alt />
-        </section>
-        <section
-          class="content"
-        >2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知2020新生入学须知新生入学须知新生入学须知新生入学须知新生入学须知</section>
-        <section class="time">
-          <img src="../../public/images/time.png" alt />
-          <span>2019-9-9 09:09:09</span>
+          <span>{{item.time}}</span>
         </section>
       </section>
     </section>
   </div>
 </template>
 <script>
-import { Swipe, SwipeItem,MessageBox,Indicator } from "mint-ui";
+import { Swipe, SwipeItem, MessageBox, Indicator } from "mint-ui";
 export default {
   name: "Hme",
   data() {
     return {
       loading: false,
-      position: [116.419356, 39.941567]
+      position: [116.419356, 39.941567],
+      user: null,
+      list: []
     };
+  },
+  mounted() {
+    this.$axios
+      .get(
+        "http://203.195.219.213:8083/stuUser/findById?id=" +
+          JSON.parse(localStorage.getItem("isLogin")).id
+      )
+      .then(result => {
+        this.user = result.data.data;
+      });
+    this.$axios
+      .get("http://203.195.219.213:8083/info/findAlldesc")
+      .then(result => {
+        this.list = result.data.data;
+      });
   },
   components: {
     Swipe,
@@ -133,19 +107,21 @@ export default {
       }, 2500);
     },
     goInfo() {
-      this.getLocation()
+      if (this.user.studentStatus != "0") {
+        MessageBox.alert("您已报到，修改信息请到个人信息");
+      } else {
+        this.getLocation();
+      }
     },
     getLocation() {
       Indicator.open({
-        text: '玩命加载中...',
-        pinnerType: 'fading-circle'
+        text: "玩命加载中...",
+        spinnerType: "fading-circle"
       });
-      // console.log('222')
       AMap.plugin("AMap.Geolocation", () => {
         var geolocation = new AMap.Geolocation({
           enableHighAccuracy: true,
           timeout: 10000
-
         });
         geolocation.getCurrentPosition();
         AMap.event.addListener(geolocation, "complete", this.onComplete);
@@ -154,9 +130,7 @@ export default {
     },
     onComplete(data) {
       Indicator.close();
-      //  console.log('33333333')
       // data是具体的定位信息
-      // console.log(data);
       var path = [
         [116.169465, 39.93267],
         [116.16026, 39.924492],
@@ -182,22 +156,20 @@ export default {
         [116.50339, 40.058474],
         [116.4688, 40.052578]
       ];
-      // console.log(this.position);
       let newStr = this.position.join(",");
-      // console.log(newStr);
       let newArr = (newStr = newStr.split(","));
-      let strLocation = newArr.join(' ')
-      let user = JSON.parse(localStorage.getItem('isLogin'))
-      user.studentLocation = strLocation
-      localStorage.setItem('isLogin',JSON.stringify(user))
+      let strLocation = newArr.join(",");
+      let user = JSON.parse(localStorage.getItem("isLogin"));
+      user.studentLocation = strLocation;
+      // user.studentStatus = 1
+      localStorage.setItem("isLogin", JSON.stringify(user));
 
       // this.position = [data.position.lat,data.position.lng];
-      // console.log(this.position);
       var isPointInRing = AMap.GeometryUtil.isPointInRing(this.position, path);
-       if(isPointInRing){
-        this.$router.push('/infotwo')
-      }else{
-          MessageBox('提示', '请到学校')
+      if (isPointInRing) {
+        this.$router.push("/infotwo");
+      } else {
+        MessageBox("提示", "请到学校");
       }
     },
     onError(data) {
@@ -210,10 +182,9 @@ export default {
         var citySearch = new AMap.CitySearch();
         citySearch.getLocalCity(function(status, result) {
           if (status === "complete" && result.info === "OK") {
-             Indicator.close();
-               this.$router.push('/infotwo')
+            Indicator.close();
+            this.$router.push("/infotwo");
             // 查询成功，result即为当前所在城市信息
-            console.log(result);
           }
         });
       });
@@ -308,11 +279,11 @@ export default {
   .info {
     font-size: 16px;
     position: absolute;
-    padding-bottom: 0.2rem;
+    // padding-bottom: 0.2rem;
     left: 0;
     right: 0;
     top: 2.7rem;
-    bottom: 0.7rem;
+    bottom: 0.57rem;
     overflow: auto;
     .item {
       font-size: 16px;
