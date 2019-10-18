@@ -46,13 +46,50 @@
         <p>更多</p>
       </router-link>
     </nav>
-    <section
+    <section class="swiper-container" >
+      <section class="swiper-wrapper">
+        <!-- <section class="swiper-slide" v-for="(item,index) in list" :key="index" >
+          <div>{{item.heading}}<span>ssssss</span></div>
+        </section> -->
+        <!-- <section class="swiper-slide"><br></section>
+        <section class="swiper-slide">jjjjjj</section>
+        <section class="swiper-slide"><br></section>
+        <section class="swiper-slide">8990</section>
+        <section class="swiper-slide">123</section> -->
+
+
+
+        <section
+          class="swiper-slide"
+          v-for="(item,index) in list"
+          :key="index"
+          style="borderColor:'#000'"
+          :style="{borderColor:color}"
+        >
+          <section class="title">
+            <span>{{item.heading}}</span>
+            <span>{{item.title}}</span>
+            <img v-if="index<1" src="../../public/images/new-card.png" alt />
+            <img v-else src="../../public/images/hot-card.png" alt />
+          </section>
+          <section class="content">{{item.decs}}</section>
+          <section class="time">
+            <img src="../../public/images/time.png" alt />
+            <span>{{item.time}}</span>
+          </section>
+        </section>
+
+
+
+      </section>
+    </section>
+    <!-- <section
       class="info"
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10"
     >
-      <section class="item" v-for="(item,index) in list" :key="index">
+      <section class="item" v-for="(item,index) in list" :key="index" style="borderColor:'#000'" :style="{borderColor:color}">
         <section class="title">
           <span>{{item.heading}}</span>
           <span>{{item.title}}</span>
@@ -65,7 +102,7 @@
           <span>{{item.time}}</span>
         </section>
       </section>
-    </section>
+    </section>-->
   </div>
 </template>
 <script>
@@ -93,13 +130,41 @@ export default {
       .get("http://203.195.219.213:8083/info/findAlldesc")
       .then(result => {
         this.list = result.data.data;
+        // this.swipe_contain();
       });
+      
+  },
+  updated(){
+    this.swipe_contain();
   },
   components: {
     Swipe,
     SwipeItem
   },
   methods: {
+    swipe_contain(){
+      var swiper = new Swiper(".swiper-container", {
+        direction: "vertical",
+        // freeMode : true,
+        // loop: true,
+        // loopAdditionalSlides: 0,
+        pagination: ".swiper-pagination",
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflow: {
+          rotate: 30,
+          stretch: 10,
+          depth: 60,
+          modifier: 2,
+          slideShadows: true
+        }
+      });
+    },
+    color() {
+      return "#000";
+    },
     loadMore() {
       this.loading = true;
       setTimeout(() => {
@@ -124,7 +189,9 @@ export default {
           timeout: 10000
         });
         geolocation.getCurrentPosition();
+        // 定位成功
         AMap.event.addListener(geolocation, "complete", this.onComplete);
+        // 定位失败
         AMap.event.addListener(geolocation, "error", this.onError);
       });
     },
@@ -226,6 +293,7 @@ export default {
       justify-content: space-around;
       align-items: center;
       flex-direction: column;
+
       p {
         padding-top: 0.08rem;
         color: #101010;
@@ -276,7 +344,7 @@ export default {
       }
     }
   }
-  .info {
+  .swiper-container {
     font-size: 16px;
     position: absolute;
     // padding-bottom: 0.2rem;
@@ -284,53 +352,60 @@ export default {
     right: 0;
     top: 2.7rem;
     bottom: 0.57rem;
-    overflow: auto;
-    .item {
-      font-size: 16px;
-      margin-top: 0.1rem;
-      border: 1px solid #ccc;
-      background: #fff;
-      .title {
-        padding: 0.1rem 0.25rem;
-        position: relative;
-        color: #101010;
-        overflow: hidden;
-        &::after {
-          content: "";
-          position: absolute;
-          width: 1px;
-          height: 20px;
-          background: #bbb;
-          top: 0.08rem;
-          left: 0.15rem;
+    // overflow: auto;
+    .swiper-wrapper {
+      .swiper-slide{
+      //   background-color: lightgreen;
+      // }
+      // .swiper-sider {
+        height: auto !important;
+        font-size: 16px;
+        margin-top: 0.1rem;
+        // border: 1px solid #ccc;
+        border: 2px lightgreen solid;
+        background: #fff;
+        .title {
+          padding: 0.1rem 0.25rem;
+          position: relative;
+          color: #101010;
+          overflow: hidden;
+          &::after {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 20px;
+            background: #bbb;
+            top: 0.08rem;
+            left: 0.15rem;
+          }
+          span:nth-of-type(1) {
+            float: left;
+          }
+          span:nth-of-type(2) {
+            float: right;
+          }
+          img {
+            position: absolute;
+            top: 0;
+            right: 0;
+          }
         }
-        span:nth-of-type(1) {
-          float: left;
+        .content {
+          padding: 0 0.1rem;
+          font-size: 14px;
+          text-indent: 2em;
         }
-        span:nth-of-type(2) {
-          float: right;
-        }
-        img {
-          position: absolute;
-          top: 0;
-          right: 0;
-        }
-      }
-      .content {
-        padding: 0 0.1rem;
-        font-size: 14px;
-        text-indent: 2em;
-      }
-      .time {
-        padding: 0.06rem 0.36rem;
-        position: relative;
-        font-size: 14px;
-        img {
-          position: absolute;
-          top: 0.05rem;
-          left: 0.13rem;
-          width: 0.17rem;
-          height: 0.17rem;
+        .time {
+          padding: 0.06rem 0.36rem;
+          position: relative;
+          font-size: 14px;
+          img {
+            position: absolute;
+            top: 0.05rem;
+            left: 0.13rem;
+            width: 0.17rem;
+            height: 0.17rem;
+          }
         }
       }
     }

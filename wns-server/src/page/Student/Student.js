@@ -97,8 +97,6 @@ class Student extends React.Component{
                         }else{
                             $.post(url,values,({status,message})=>{
                                 if(status === 200){
-                                    console.log("进来了11")
-
                                     $.post(url2,{username:values.studentNumber},({status})=>{
                                         if(status === 200){
                                             alert("报到成功")

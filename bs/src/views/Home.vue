@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <router-view @showNav="showNav"></router-view>
+    <transition name="slide-fade">
+      <router-view @showNav="showNav"></router-view>
+    </transition>
     <transition name="slide">
       <section class="nav-f" v-if="ee">
         <router-link to="/home/hme" class="item" @click.native="toggleActiveHandle(1)">
@@ -92,6 +94,17 @@ export default {
     .router-link-active {
       color: #1296db;
     }
+  }
+  .slide-fade-enter-active {
+    transition: all 0.3s linear;
+  }
+  .slide-fade-leave-active {
+    transition: all 0.3s linear;
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+    // transform: translateX(10px);
+    opacity: 0;
   }
 }
 </style>

@@ -15,7 +15,10 @@ export default {
     $route(to, from) {
       this.isActiveApp = to.meta.isActive;
     }
-  }
+  },
+  // mounted(){
+  //   alert(plus.navigator.isImmersedStatusbar());
+  // }
 };
 </script>
 <style lang="scss">
