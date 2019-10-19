@@ -4,6 +4,7 @@
   <!-- <section class="box">
     <img src="https://mmbiz.qpic.cn/mmbiz_png/kDPsYnnCeVl87U9ianZNnYomZ2uHqZXEjXe0bj3Tr9ibRtwst4rxZ6DzyYjSVOvJXhIhdEKK2gbVHRMJsTMUFZhA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt />
   </section> -->
+    <img src="../../public/images/404.png"/>
   </div>
 </template>
 <script>
@@ -16,6 +17,7 @@ export default {
     
     background: #e4f4ea;
     height: 100vh;
+    text-align: center;
     header {
       background: #1296db;
       padding: 0.2rem;
@@ -30,6 +32,13 @@ export default {
         left:.03rem;
         font-size: 40px;
       }
+    }
+    img{
+          width: 60vw;
+    height: 30vh;
+    position: absolute;
+    top: 31vh;
+    left: 26vw;
     }
     .box{
       width: 100%;

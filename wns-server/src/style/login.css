@@ -3,22 +3,15 @@
     height: 100%;
     background: url("../static/bg_tree.png") no-repeat 0 -230px;
     background-size: 100%;
-    opacity: 1;
+    opacity: 1;  
 }
 .LoginForm{
-    /* width: 500px; */
-    position: absolute;
-    right: 100px;
-    top: 150px;
-    border-radius: 10px;
-    padding: 60px 50px;
-    background: rgba(207,219,198,0.7);
-    box-shadow: 5px 5px 10px #444;    
+    padding-top:13%;
+    text-align: center;
 }
-.title{
-    font-size: 30px;
-    color: #FEE72C;
-    position: absolute;
-    left:250px;
-    top: 150px;
+
+.LoginBottom{
+    text-align: right;
+    padding-right: 12%;
+    padding-top:10%;
 }

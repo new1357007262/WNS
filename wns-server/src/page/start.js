@@ -4,8 +4,8 @@ import { Layout, Menu, Icon } from 'antd';
 import "../style/start.css"
 
 import Student from "./Student/Student"
-import StuUser from "./User/StuUser/StuUser"
-import TeaUser from './User/TeaUser/TeaUser'
+import StuUser from "./StuUser/StuUser"
+// import TeaUser from './User/TeaUser/TeaUser'
 import Major from './Major/Major'
 import Course from './Course/Course'
 import Info from './Info/Info'
@@ -36,7 +36,6 @@ class Start extends React.Component{
     }
     render(){
         const { Header, Content, Footer, Sider } = Layout;
-        const {SubMenu} = Menu;
   return (
     <Layout>
       <Sider
@@ -49,7 +48,7 @@ class Start extends React.Component{
         console.log(collapsed, type);
       }}
       >
-        <div className="logo" ><img src={require("../static/logo_bg.png")} style={{width:200,height:60,backgroundColor:'#fff'}}/></div>
+        <div className="logo"><img src={require("../static/logo-title.png")} style={{width:200,height:60,backgroundColor:'#fff'}}/></div>
         <Menu theme="light" style={{height:'100%'}} mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">
             <Link to={`${this.props.match.path}/student`}>
@@ -69,25 +68,19 @@ class Start extends React.Component{
             <span>专业管理</span>
             </Link>
           </Menu.Item>
-          <SubMenu
-            title={
-              <span>
-                <Icon type="user" />
-                <span>用户管理</span>
-              </span>}
-          >
-            <Menu.Item key="4">
+            {/* <Menu.Item key="4">
                 <Link to={`${this.props.match.path}/teaUser`}>
+                  <Icon type="appstore" />
                 <span>教师用户</span>
                 </Link>
-            </Menu.Item>
-            <Menu.Item key="5">
+            </Menu.Item> */}
+            <Menu.Item key="4">
                 <Link to={`${this.props.match.path}/stuUser`}>
+                  <Icon type="appstore" />
                 <span>学生用户</span>
                 </Link>
             </Menu.Item>
-          </SubMenu>
-          <Menu.Item key="6">
+          <Menu.Item key="5">
             <Link to={`${this.props.match.path}/info`}>
             <Icon type="notification" />
             <span>消息管理</span>
@@ -96,7 +89,7 @@ class Start extends React.Component{
         </Menu>
       </Sider>
       <Layout>
-      <Header className="start_header" style={{ background:"#11BCB1",color:"#fff", padding: 0 ,textAlign:'center',fontSize:25}} >迎新数据管理系统{ 
+      <Header className="start_header" style={{ background:"#11BCB1",color:"#fff", padding: 0 ,textAlign:'center',fontSize:25}} >迎新后台管理系统{ 
       (
         this.state.User != null ?  
         (<span className="start_user">{this.state.User.realname+" 你好！"}<span onClick={()=>{this.props.history.push("/");this.setState({User:{}})}}>退出</span></span>)
@@ -109,7 +102,7 @@ class Start extends React.Component{
             <Route exact path={`${this.props.match.path}`} component={Student}/>
             <Route path={`${this.props.match.path}/student`} component={Student}/>
             <Route path={`${this.props.match.path}/stuUser`} component={StuUser}/>
-            <Route path={`${this.props.match.path}/teaUser`} component={TeaUser}/>
+            {/* <Route path={`${this.props.match.path}/teaUser`} component={TeaUser}/> */}
             <Route path={`${this.props.match.path}/major`} component={Major}/>
             <Route path={`${this.props.match.path}/course`} component={Course}/>
             <Route path={`${this.props.match.path}/info`} component={Info}/>

@@ -2,7 +2,7 @@
   <div class="home">
     <img class="title-img1" src="../../public/images/bg-login-title.png" alt />
     <img class="title-img2" src="../../public/images/bg-login-title2.png" alt />
-    <h1 class="title">智能迎新系统</h1>
+    <div class="title">智能迎新系统</div>
     <section class="frm">
       <section class="username-box">
         <label for="username" class="uname">用户名：</label>
@@ -79,8 +79,8 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url("../../public/images/bg-login.jpg") center 0 no-repeat;
-  background-size: cover;
+  background: url("../../public/images/bg4.jpg") center 0 no-repeat;
+  background-size: 100% ;
 }
 .home {
   width: 100vw;
@@ -99,9 +99,18 @@ export default {
     height: 0.34rem;
   }
   .title {
+
+    // 字体没加上去
+  
+    @font-face{
+      font-family: mFont;
+      src: url("../../public/images/loukong.ttf");
+    }
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 23px;
-    color: #3fbfdb;
+    color: #FEA884;
     text-align: center;
+    font-weight: bold;
     margin-top: 0.27rem;
   }
   .frm {

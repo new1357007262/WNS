@@ -1,0 +1,15 @@
+.ant-form-item-label > label{
+    color:#fff
+}
+@font-face {
+  font-family: mFont;
+  src: url('../static/loukong.ttf');
+}
+.login>span{
+    display: block;
+    margin-bottom: 1%;
+    margin-left:2%;
+    color: rgba(238, 209, 45, 0.945);
+    font-size: 30px;
+    font-family:mFont;
+}

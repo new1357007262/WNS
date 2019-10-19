@@ -13,23 +13,23 @@ class TUserForm extends React.Component{
       // this.loadMajors();
     }
     // 自定义校验器 
-    checkUser=(rule, value, callback)=>{
-        // let url = "http://localhost:8083/teaUser/CheckUsername";
-        let url = "http://203.195.219.213:8083/teaUser/CheckUsername";
-        setTimeout(() => {
-          // 为防止在更新时做校验
-          if(!this.props.TeaUser){
-            $.get(url,{username:value},(data)=>{
-                if(data != null){
-                  callback("用户存在，请勿重复添加");
-                }
-                callback(); 
-            })
-          }else{
-            callback();
-          }
-        }, 1000);
-    }
+    // checkUser=(rule, value, callback)=>{
+    //     // let url = "http://localhost:8083/teaUser/CheckUsername";
+    //     let url = "http://203.195.219.213:8083/teaUser/CheckUsername";
+    //     setTimeout(() => {
+    //       // 为防止在更新时做校验
+    //       if(!this.props.TeaUser){
+    //         $.get(url,{username:value},(data)=>{
+    //             if(data != null){
+    //               callback("用户存在，请勿重复添加");
+    //             }
+    //             callback(); 
+    //         })
+    //       }else{
+    //         callback();
+    //       }
+    //     }, 1000);
+    // }
     render(){
         const { getFieldDecorator,  getFieldError, isFieldTouched } = this.props.form;
         const formItemLayout = {

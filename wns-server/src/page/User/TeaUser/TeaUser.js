@@ -10,23 +10,23 @@ class TeaUser extends React.Component{
             loading:false,
             dataloading:false,
             visible:false,
-            TeaUsers:[],
+            maps:[],
             selectedRowKeys:[],
-            TeaUser:{}
+            map:{}
         }
     }
     componentDidMount(){
         this.loadTeaUsers();
     }
     //获取数据库中的所有数据
-    loadTeaUsers(){
+    loadmaps(){
         this.setState({dataloading:true})
         // let url = "http://localhost:8083/teaUser/findAll";
-        let url = "http://203.195.219.213:8083/teaUser/findAll";
+        let url = "http://203.195.219.213:8083/map/FindAll";
         $.get(url,({status,data})=>{
             if(status === 200 && data != null){
                     this.setState({
-                        TeaUsers:data,
+                        maps:data,
                         dataloading:false
                     })
             }else{
@@ -43,10 +43,10 @@ class TeaUser extends React.Component{
     // 删除单个
     handleDelete=(id)=>{
         // let url ="http://localhost:8083/teaUser/DelById?id="+id;
-        let url ="http://203.195.219.213:8083/teaUser/DelById?id="+id;
+        let url ="http://203.195.219.213:8083/map/DelById?id="+id;
         $.get(url,({status,message})=>{
             if(status === 200){
-                this.loadTeaUsers();
+                this.loadmaps();
             }else{
                 alert(message)
             }
@@ -57,12 +57,12 @@ class TeaUser extends React.Component{
         let {selectedRowKeys} = this.state;
         this.setState({loading:true})
         // let url ="http://localhost:8083/teaUser/DelById";
-        let url ="http://203.195.219.213:8083/teaUser/DelById";
+        let url ="http://203.195.219.213:8083/map/DelById";
         selectedRowKeys.forEach(item=>{
             console.log(item)
              $.get(url,{id:item},({status,message})=>{
                 if(status === 200){
-                    this.loadTeaUsers();
+                    this.loadmaps();
                 }else{
                     alert(message)
                 }
@@ -79,13 +79,13 @@ class TeaUser extends React.Component{
     submitHandler=(e)=>{
         e.preventDefault();
         // let url = "http://localhost:8083/teaUser/saveOrUpdate";
-        let url = "http://203.195.219.213:8083/teaUser/saveOrUpdate";
+        let url = "http://203.195.219.213:8083/map/saveOrUpdate";
         this.state.form.validateFieldsAndScroll((err,values)=>{
             if(!err){
                 $.post(url,values,({status,message})=>{
                     if(status === 200){
                     this.handleCancel();
-                    this.loadTeaUsers();
+                    this.loadmaps();
                     }else{
                     alert(message)
                     this.handleCancel();
@@ -98,13 +98,13 @@ class TeaUser extends React.Component{
     toAdd =()=>{
         this.setState({
             visible:true,
-            TeaUser:{}
+            map:{}
         })
     }
     toUpdate(record){
         this.setState({
             visible:true,
-            TeaUser:record
+            map:record
         })
     }
     // 保存ref到state
@@ -114,25 +114,31 @@ class TeaUser extends React.Component{
     render(){
         const columns = [
             {
-              title: '用户名',
-              dataIndex: 'username',
-              key:'usernamae',
+              title: '设施名称',
+              dataIndex: 'name',
+              key:'name',
               align:'center'
             },
             {
-                title:'教师真实姓名',
-                dataIndex:'realname',
-                key:'realname',
+                title:'经度',
+                dataIndex:'lng',
+                key:'lng',
+                align:'center'
+            },
+            {
+                title:'纬度',
+                dataIndex:'lat',
+                key:'lat',
                 align:'center'
             },
             {
                 title:'操作',
                 render: (record) => <span>{(
-                this.state.TeaUsers.length >= 1 ? (
+                this.state.maps.length >= 1 ? (
                     <Popconfirm title="Sure to delete?" onConfirm={this.handleDelete.bind(this,record.id)}>
                       <Button type="danger">Delete</Button>
                     </Popconfirm>
-                  ) : null)},{(this.state.TeaUsers.length >= 1 ? (
+                  ) : null)},{(this.state.maps.length >= 1 ? (
                     <Popconfirm title="Sure to update?" onConfirm={this.toUpdate.bind(this,record)}>
                       <Button type="primary">Update</Button>
                     </Popconfirm>
@@ -144,7 +150,7 @@ class TeaUser extends React.Component{
             }
         ];
         
-        const { dataloading,loading, selectedRowKeys,TeaUsers } = this.state;
+        const { dataloading,loading, selectedRowKeys,maps } = this.state;
         // table选择框，重新赋值到变量中
         const rowSelection = {
             selectedRowKeys,
@@ -154,7 +160,7 @@ class TeaUser extends React.Component{
         return (
             <div>
                 <div style={{ marginBottom: 16 }}>
-                <Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加老师用户</Button>
+                <Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加校园设施</Button>
                 <Popconfirm title="Sure to delete?" onConfirm={this.Alldel}>
                     <Button type="danger"  disabled={!hasSelected} loading={loading}>
                         批量删除
@@ -167,13 +173,13 @@ class TeaUser extends React.Component{
                 </div>
                 <Table  loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={TeaUsers} size="small" scroll={{ y: 330 }} />
                 <Modal
-                title="教师用户信息"
+                title="校园设施信息"
                 visible={this.state.visible}
                 onOk={this.submitHandler}
                 onCancel={this.handleCancel}
                 destroyOnClose
                 >
-                    <TUserForm TeaUser={this.state.TeaUser} ref={this.SaveRef}/>
+                    <TUserForm map={this.state.map} ref={this.SaveRef}/>
                 </Modal>
             </div>
         )

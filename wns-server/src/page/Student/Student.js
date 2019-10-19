@@ -1,5 +1,5 @@
 import React from "react"
-import { Table, Button,Modal,Popconfirm} from 'antd';
+import { Table, Button,Modal,Popconfirm,Input} from 'antd';
 import {withRouter} from 'react-router-dom'
 import $ from "jquery"
 import StuForm from "./StuForm"
@@ -141,11 +141,27 @@ class Student extends React.Component{
             Student:record
         })
     }
+    search=value=>{
+        this.setState({dataloading:true})
+        $.get("http://203.195.219.213:8083/stuBf/findByMajorname?majorName="+value,({status,data,message})=>{
+            console.log(data)
+            if(data.length != 0 ){
+                this.setState({
+                    Students:data,
+                    dataloading:false
+                }) 
+            }else{
+                this.setState({dataloading:false})
+                alert(status+message+data)
+            }
+        })
+    }
     // 保存ref到state
     SaveRef=(form)=>{
         this.setState({form})
     }
     render(){
+        let {Search} = Input;
         const columns = [
             {
               title: '学号',
@@ -227,17 +243,19 @@ class Student extends React.Component{
         const hasSelected = selectedRowKeys.length > 0;
         return (
             <div>
-                <div style={{ marginBottom: 16 }}>
-                <Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加学生</Button>
+                <div style={{ marginBottom: 16,display:'flex' }}>
+                    <div style={{flex:1}}><Button type="primary" onClick={this.toAdd} style={{marginRight:10}}>添加学生</Button>
                 <Popconfirm title="Sure to delete?" onConfirm={this.Alldel}>
                     <Button type="danger"  disabled={!hasSelected} loading={loading}>
                         批量删除
                     </Button>
                 </Popconfirm>
                
-                <span style={{ marginLeft: 8 }}>
+                {/* <span style={{ marginLeft: 8 }}>
                     {hasSelected ? `选择了 ${selectedRowKeys.length} 条数据` : ''}
-                </span>
+                </span> */}
+                </div>
+                 <Search size="large" placeholder="请输入专业名称" style={{ width:1000 ,textAlign:'left'}} onSearch={this.search.bind(this)} enterButton />
                 </div>
                 <Table loading={dataloading} rowSelection={rowSelection} rowKey={record => record.id} columns={columns} dataSource={Students} size="small" />
                 <Modal

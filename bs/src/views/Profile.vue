@@ -19,10 +19,10 @@
           <span>个人信息</span>
           <span>></span>
         </router-link>
-        <router-link to="/course" tag="li">
+        <!-- <router-link to="/course" tag="li">
           <span>当前专业所开发的课程</span>
           <span>></span>
-        </router-link>
+        </router-link> -->
       </ul>
     </section>
   </div>

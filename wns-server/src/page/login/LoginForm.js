@@ -3,7 +3,7 @@ import React from "react"
 import {withRouter} from "react-router-dom"
 import $ from "jquery";
 import Register from "./Register";
-// import '../style/login.css'
+import '../../style/loginForm.css'
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -111,6 +111,7 @@ class LoginForm extends React.Component {
     const passwordError = isFieldTouched('password') && getFieldError('password');
     return (
       <div className="login" style={{textAlign:"center"}}>
+        <span>迎新后台管理系统</span>
         <Form {...formItemLayout} layout="inline" onSubmit={this.handleSubmit}>
         {/* getFieldDecorator获取属性包装器 */}
         <Form.Item style={{width:299}} label="用户名" validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
@@ -140,7 +141,7 @@ class LoginForm extends React.Component {
               <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())} >
               Log in
             </Button>
-            <Button type="primary" style={{marginLeft:10}} onClick={this.showModal}>Register</Button>
+            {/* <Button type="primary" style={{marginLeft:10}} onClick={this.showModal}>Register</Button> */}
               </div>
            
       </Form>
