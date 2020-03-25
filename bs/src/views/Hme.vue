@@ -247,9 +247,10 @@ export default {
     getLngLatLocation() {
       AMap.plugin("AMap.CitySearch", () => {
         var citySearch = new AMap.CitySearch();
-        citySearch.getLocalCity(function(status, result) {
+        citySearch.getLocalCity((status, result)=>{
           if (status === "complete" && result.info === "OK") {
             Indicator.close();
+            // console.log(this.$router)
             this.$router.push("/infotwo");
             // 查询成功，result即为当前所在城市信息
           }
@@ -392,7 +393,7 @@ export default {
         }
         .content {
           padding: 0 0.1rem;
-          font-size: 14px;
+          font-size: 17px;
           text-indent: 2em;
         }
         .time {

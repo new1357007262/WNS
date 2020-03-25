@@ -58,8 +58,10 @@ export default {
         .then(res => {
           if (res.data.data !== null) {
             this.userinfo = res.data.data;
+            console.log(res.data.data)
 
             localStorage.setItem("isLogin", JSON.stringify(this.userinfo));
+            console.log(localStorage)
             this.$router.push("/home");
           } else {
             MessageBox("提示", "用户名或者密码错误");
